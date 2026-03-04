@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator procentu składanego | jakaemerytura.pl</title>
+    <meta name="description" content="Sprawdź jak rośnie kapitał dzięki procentowi składanemu.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo"><a href="../index.html">💰 jakaemerytura.pl</a></div>
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+            <ul class="main-nav">
+                <li><a href="#">Problem</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../problem/emerytura-z-zus.html">Emerytura z ZUS</a></li>
+                        <li><a href="../problem/inflacja.html">Inflacja a oszczędności</a></li>
+                        <li><a href="../problem/demografia.html">Demografia</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Produkty</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../produkty/ike.html">IKE</a></li>
+                        <li><a href="../produkty/ikze.html">IKZE</a></li>
+                        <li><a href="../produkty/ppk.html">PPK</a></li>
+                        <li><a href="../produkty/ppe.html">PPE</a></li>
+                        <li><a href="../produkty/obligacje-skarbowe.html">Obligacje skarbowe</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Inwestowanie</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../inwestowanie/etf-fundusze.html">ETF i fundusze indeksowe</a></li>
+                        <li><a href="../inwestowanie/nieruchomosci.html">Nieruchomości</a></li>
+                        <li><a href="../inwestowanie/zloto.html">Złoto</a></li>
+                    </ul>
+                </li>
+                <li><a href="../kalkulatory/index.html">Kalkulatory</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="tel:+48XXXXXXXXX" class="nav-phone">📞 +48 XXX XXX XXX</a>
+                <button class="cta-btn" onclick="scrollToFooterForm()">Bezpłatna konsultacja</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Kalkulator procentu składanego</h1>
+            <p>Zobacz jak Twoje oszczędności rosną w czasie dzięki sile procentu składanego.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="content-section fade-in-section">
+            <h2>Oblicz wzrost kapitału w czasie</h2>
+            <p>Treść zostanie uzupełniona.</p>
+        </section>
+
+        <section class="cta-section fade-in-section">
+            <h2>Chcesz wiedzieć więcej?</h2>
+            <p>Skontaktuj się z nami – bezpłatna konsultacja, bez zobowiązań.</p>
+            <button class="cta-btn" style="background: white; color: #10b981;" onclick="scrollToFooterForm()">Umów bezpłatną konsultację</button>
+        </section>
+    </div>
+
+    <footer class="footer" id="footerForm">
+        <div class="footer-content">
+            <div class="footer-info-box">
+                <h3>💰 jakaemerytura.pl</h3>
+                <p>Pomagamy Polakom zaplanować bezpieczną przyszłość finansową.</p>
+                <p style="margin-top: 1.5rem; font-weight: 600;">Wypełnij formularz, a skontaktujemy się z Tobą.</p>
+            </div>
+            <div class="footer-form">
+                <h3>Formularz kontaktowy</h3>
+                <form action="https://formspree.io/f/TUTAJ_ENDPOINT" method="POST">
+                    <div class="form-group">
+                        <label for="contactName">Imię i nazwisko</label>
+                        <input type="text" id="contactName" name="name" placeholder="Imię i nazwisko" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Adres e-mail</label>
+                        <input type="email" id="contactEmail" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone">Telefon</label>
+                        <input type="tel" id="contactPhone" name="phone" placeholder="Telefon (opcjonalnie)">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Wiadomość</label>
+                        <textarea id="contactMessage" name="message" placeholder="Jak możemy Ci pomóc?"></textarea>
+                    </div>
+                    <button type="submit">Wyślij wiadomość</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 jakaemerytura.pl. Wszystkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
+    <div class="floating-btn" onclick="scrollToFooterForm()">📞 Bezpłatna konsultacja</div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
