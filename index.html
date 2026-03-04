@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Przyszła Emerytura - Zaplanuj swoją przyszłość finansową</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2310b981'/><path d='M50 20 L65 30 L65 70 L50 80 L35 70 L35 30 Z' fill='%23ffffff'/><circle cx='50' cy='50' r='12' fill='%2310b981'/><text x='50' y='58' text-anchor='middle' font-size='18' font-weight='bold' fill='%23ffffff'>$</text><path d='M40 35 L45 30 M55 30 L60 35 M40 65 L45 70 M55 70 L60 65' stroke='%2310b981' stroke-width='2' fill='none'/></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .cta-btn {
+            background: white;
+            color: #10b981;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero {
+            position: relative;
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            z-index: 0;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.85) 0%, rgba(5, 150, 105, 0.85) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .problem-section {
+            background: white;
+            padding: 4rem 2rem;
+            margin-top: -2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .chart-section {
+            background: white;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .chart-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Animacje przy przewijaniu */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Opóźnienia dla kolejnych elementów */
+        .stat-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .stat-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-card:nth-child(1) { transition-delay: 0.1s; }
+        .stat-card:nth-child(2) { transition-delay: 0.2s; }
+        .stat-card:nth-child(3) { transition-delay: 0.3s; }
+
+        .solution-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .solution-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .solution-card:nth-child(1) { transition-delay: 0.1s; }
+        .solution-card:nth-child(2) { transition-delay: 0.2s; }
+        .solution-card:nth-child(3) { transition-delay: 0.3s; }
+        .solution-card:nth-child(4) { transition-delay: 0.4s; }
+        .solution-card:nth-child(5) { transition-delay: 0.5s; }
+        .solution-card:nth-child(6) { transition-delay: 0.6s; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 4px solid #10b981;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #10b981;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .calculator-section {
+            background: white;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .calculator-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .calculator-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .calculator-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #10b981;
+        }
+
+        .gender-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .gender-btn {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #333;
+        }
+
+        .gender-btn:hover {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .gender-btn.active {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #e0e0e0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #yearsValue {
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .total-needed-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #10b981;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .total-needed-label {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .total-needed-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #10b981;
+            margin: 0.5rem 0;
+        }
+
+        .total-needed-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .input-suffix {
+            position: relative;
+        }
+
+        .input-suffix input {
+            padding-right: 3.5rem;
+        }
+
+        .input-suffix::after {
+            content: attr(data-suffix);
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-weight: 600;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .results {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .result-value.negative {
+            color: #e74c3c;
+        }
+
+        .result-highlight {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .result-highlight h3 {
+            color: #e74c3c;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-highlight .big-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .solutions-section {
+            padding: 4rem 2rem;
+            background: white;
+            margin: 3rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .solutions-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .solution-card {
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .solution-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .solution-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .solution-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .solution-features {
+            list-style: none;
+        }
+
+        .solution-features li {
+            padding: 0.5rem 0;
+            color: #555;
+        }
+
+        .solution-features li::before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: stretch;
+        }
+
+        .footer-info-box {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .footer-info-box h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .footer-info-box p {
+            opacity: 0.95;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .footer-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .footer-form input,
+        .footer-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .footer-form input::placeholder,
+        .footer-form textarea::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .footer-form input:focus,
+        .footer-form textarea:focus {
+            outline: none;
+            border-color: #10b981;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .footer-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .footer-form button {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .footer-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                min-height: 300px;
+                padding: 3rem 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cta-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .cta-box {
+                padding: 2rem;
+            }
+
+            .cta-box h3 {
+                font-size: 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">💰 Przyszła Emerytura</div>
+            <button class="cta-btn" onclick="scrollToContact()">Skontaktuj się z nami</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <img src="obrazy/hero-background.jpg" alt="Emerytura" class="hero-image">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Twoja emerytura z ZUS może być niewystarczająca</h1>
+            <p>Dowiedz się, ile będzie Ci brakować i jak samodzielnie zadbać o swoją przyszłość finansową</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="problem-section fade-in-section">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Problem emerytalny w Polsce</h2>
+            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
+                System emerytalny w Polsce stoi przed poważnymi wyzwaniami. Starzejące się społeczeństwo i coraz niższy stosunek pracujących do emerytów oznaczają, że przyszłe emerytury będą znacznie niższe niż obecne wynagrodzenia.
+            </p>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">30-40%</div>
+                    <div class="stat-label">Ostatniego wynagrodzenia to przewidywana emerytura z ZUS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">↓</div>
+                    <div class="stat-label">Stopa zastąpienia systematycznie spada</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20-30 lat</div>
+                    <div class="stat-label">Tyle możesz spędzić na emeryturze</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chart-section fade-in-section">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Przeciętna miesięczna wypłata emerytury</h2>
+            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
+                Wzglądem przeciętnego wynagrodzenia w Polsce (w proc.)
+            </p>
+            <div class="chart-container">
+                <canvas id="retirementChart"></canvas>
+            </div>
+            <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">
+                * Wartości od 2030 to prognozy
+            </p>
+        </section>
+
+        <section class="calculator-section fade-in-section" id="calculator">
+            <h2>🧮 Kalkulator luki emerytalnej</h2>
+            <p class="calculator-subtitle">Sprawdź, ile będzie Ci brakować do komfortowej emerytury</p>
+
+            <form class="calculator-form" id="retirementForm">
+                <div class="form-group">
+                    <label for="currentAge">Twój obecny wiek:</label>
+                    <div class="input-suffix" data-suffix="lat">
+                        <input type="number" id="currentAge" min="18" max="67" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Płeć:</label>
+                    <div class="gender-buttons">
+                        <button type="button" class="gender-btn" data-gender="female" onclick="selectGender('female')">
+                            Kobieta
+                        </button>
+                        <button type="button" class="gender-btn" data-gender="male" onclick="selectGender('male')">
+                            Mężczyzna
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="retirementAge">Wiek emerytalny:</label>
+                    <div class="input-suffix" data-suffix="lat">
+                        <input type="number" id="retirementAge" min="60" max="70" readonly style="background-color: #f0f0f0;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="yearsInRetirement">Lat na emeryturze: <span id="yearsValue">20</span></label>
+                    <input type="range" id="yearsInRetirement" min="10" max="30" value="20" class="slider">
+                </div>
+
+                <div class="form-group">
+                    <label for="desiredPension">Ile chciałbyś mieć miesięcznie na emeryturze:</label>
+                    <div class="input-suffix" data-suffix="zł">
+                        <input type="number" id="desiredPension" min="1000" step="100" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="expectedPension">Emerytura z ZUS:</label>
+                    <div class="input-suffix" data-suffix="zł">
+                        <input type="number" id="expectedPension" min="0" step="100" required>
+                    </div>
+                </div>
+
+                <div class="total-needed-box" id="totalNeededBox">
+                    <div class="total-needed-label">Całkowita kwota potrzebna na emeryturę:</div>
+                    <div class="total-needed-value" id="totalNeededValue">0 zł</div>
+                    <div class="total-needed-info">To suma, którą musisz zgromadzić do emerytury</div>
+                </div>
+
+                <button type="button" class="calculate-btn" onclick="scrollToFooterForm()">Skontaktuj się z nami</button>
+            </form>
+        </section>
+
+        <section class="solutions-section fade-in-section">
+            <h2>📊 Rozwiązania - jak uzupełnić lukę emerytalną?</h2>
+            
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">🏢</div>
+                    <h3>PPK (Pracownicze Plany Kapitałowe)</h3>
+                    <p>Program wsparty przez pracodawcę i państwo</p>
+                    <ul class="solution-features">
+                        <li>Dopłaty od pracodawcy</li>
+                        <li>Dopłata powitalna 250 zł</li>
+                        <li>Coroczna dopłata państwa</li>
+                        <li>Niskie koszty zarządzania</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">💼</div>
+                    <h3>IKE (Indywidualne Konto Emerytalne)</h3>
+                    <p>Długoterminowe oszczędzanie z ulgami podatkowymi</p>
+                    <ul class="solution-features">
+                        <li>Zwolnienie z podatku Belki</li>
+                        <li>Limit wpłat 2024: ~23 000 zł</li>
+                        <li>Różne produkty do wyboru</li>
+                        <li>Wypłata po 60. roku życia</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">📈</div>
+                    <h3>IKZE (Indywidualne Konto Zabezpieczenia Emerytalnego)</h3>
+                    <p>Ulga podatkowa już teraz</p>
+                    <ul class="solution-features">
+                        <li>Ulga podatkowa do ~7 000 zł rocznie</li>
+                        <li>Limit wpłat 2024: ~11 500 zł</li>
+                        <li>Niski podatek przy wypłacie (10%)</li>
+                        <li>Dodatkowe oszczędności</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">🎯</div>
+                    <h3>Fundusze Emerytalne</h3>
+                    <p>Profesjonalne zarządzanie kapitałem</p>
+                    <ul class="solution-features">
+                        <li>Dywersyfikacja inwestycji</li>
+                        <li>Profesjonalni zarządzający</li>
+                        <li>Dostosowane do wieku strategie</li>
+                        <li>Monitorowanie wyników</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">📊</div>
+                    <h3>Inwestycje (akcje, ETF, obligacje)</h3>
+                    <p>Samodzielne budowanie portfela inwestycyjnego</p>
+                    <ul class="solution-features">
+                        <li>Pełna kontrola nad portfelem</li>
+                        <li>Samodzielny wybór instrumentów</li>
+                        <li>Dywersyfikacja globalna</li>
+                        <li>Elastyczność w wypłatach</li>
+                        <li>Brak limitów wpłat</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">🔧</div>
+                    <h3>Inne</h3>
+                    <p>Dodatkowe możliwości zabezpieczenia emerytury</p>
+                    <ul class="solution-features">
+                        <li>Ubezpieczenia na życie z UFK</li>
+                        <li>Nieruchomości / REITy</li>
+                        <li>Złoto i metale szlachetne</li>
+                        <li>Lokaty strukturyzowane</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section fade-in-section" id="contact">
+            <h2>Gotowy zaplanować swoją emeryturę?</h2>
+            <p>Skontaktuj się z nami, a pomożemy Ci wybrać najlepsze rozwiązanie dopasowane do Twoich potrzeb</p>
+            <button class="cta-btn" style="background: white; color: #10b981;" onclick="scrollToFooterForm()">Skontaktuj się z nami</button>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info-box">
+                <h3>💰 Przyszła Emerytura</h3>
+                <p>Pomagamy Polakom zaplanować bezpieczną przyszłość finansową. Nasza misja to edukacja i doradztwo w zakresie długoterminowego oszczędzania na emeryturę.</p>
+                <p style="margin-top: 1.5rem;">Skorzystaj z naszych rozwiązań: PPK, IKE, IKZE, fundusze emerytalne lub inne rozwiązania dopasowane do Twoich potrzeb.</p>
+                <p style="margin-top: 1.5rem; font-weight: 600;">Porozmawiajmy o Twojej sytuacji! Wypełnij formularz, a skontaktujemy się z Tobą, aby wspólnie znaleźć najlepszą ścieżkę do Twojej wymarzonej emerytury.</p>
+            </div>
+            
+            <div class="footer-form">
+                <h3>Formularz kontaktowy</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="contactName">Imię i nazwisko</label>
+                        <input type="text" id="contactName" name="name" placeholder="Jan Kowalski" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Adres e-mail</label>
+                        <input type="email" id="contactEmail" name="email" placeholder="jan@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Wiadomość</label>
+                        <textarea id="contactMessage" name="message" placeholder="Jak możemy Ci pomóc?" required></textarea>
+                    </div>
+                    <button type="submit">Wyślij wiadomość</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Przyszła Emerytura. Wszystkie prawa zastrzeżone.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Zadbaj o swoją przyszłość finansową już dziś</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Obsługa animacji przy przewijaniu
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, observerOptions);
+
+        // Obserwuj wszystkie sekcje z klasą fade-in-section
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeInSections = document.querySelectorAll('.fade-in-section');
+            fadeInSections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Obserwuj karty statystyk
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Obserwuj karty rozwiązań
+            const solutionCards = document.querySelectorAll('.solution-card');
+            solutionCards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // Wykres stopy zastąpienia
+        const ctx = document.getElementById('retirementChart').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(16, 185, 129, 0.5)');
+        gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2014', '2015', '2016', '2017', '2018', '2030*', '2040*', '2050*', '2060*'],
+                datasets: [{
+                    label: 'Stopa zastąpienia (%)',
+                    data: [61.8, 61.5, 60.3, 58.5, 56.4, 47.1, 37.6, 28.7, 24.6],
+                    borderColor: '#10b981',
+                    backgroundColor: gradient,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#10b981',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        padding: 12,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 20,
+                        max: 80,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            },
+                            font: {
+                                size: 12
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        });
+
+        function scrollToContact() {
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToFooterForm() {
+            document.querySelector('.footer-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Obsługa wyboru płci
+        let selectedGender = null;
+
+        function selectGender(gender) {
+            selectedGender = gender;
+            
+            // Usunięcie active z wszystkich przycisków
+            document.querySelectorAll('.gender-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Dodanie active do wybranego przycisku
+            document.querySelector(`[data-gender="${gender}"]`).classList.add('active');
+            
+            // Ustawienie wieku emerytalnego
+            const retirementAgeInput = document.getElementById('retirementAge');
+            if (gender === 'female') {
+                retirementAgeInput.value = 60;
+            } else if (gender === 'male') {
+                retirementAgeInput.value = 65;
+            }
+        }
+
+        // Obsługa suwaka lat na emeryturze
+        const yearsSlider = document.getElementById('yearsInRetirement');
+        const yearsValue = document.getElementById('yearsValue');
+
+        yearsSlider.addEventListener('input', function() {
+            yearsValue.textContent = this.value;
+            calculateTotalNeeded();
+        });
+
+        // Funkcja obliczająca całkowitą kwotę potrzebną
+        function calculateTotalNeeded() {
+            const desiredPension = parseFloat(document.getElementById('desiredPension').value) || 0;
+            const expectedPension = parseFloat(document.getElementById('expectedPension').value) || 0;
+            const yearsInRetirement = parseInt(document.getElementById('yearsInRetirement').value) || 20;
+
+            const monthlyGap = desiredPension - expectedPension;
+            const totalNeeded = monthlyGap * yearsInRetirement * 12;
+
+            const totalNeededValue = document.getElementById('totalNeededValue');
+            totalNeededValue.textContent = totalNeeded.toLocaleString('pl-PL') + ' zł';
+        }
+
+        // Nasłuchiwanie zmian w polach formularza
+        document.getElementById('desiredPension').addEventListener('input', calculateTotalNeeded);
+        document.getElementById('expectedPension').addEventListener('input', calculateTotalNeeded);
+
+        // Obsługa formularza kontaktowego
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // Tworzenie linku mailto
+            const subject = encodeURIComponent('Kontakt ze strony Przyszła Emerytura');
+            const body = encodeURIComponent(
+                `Imię i nazwisko: ${name}\n` +
+                `Email: ${email}\n\n` +
+                `Wiadomość:\n${message}`
+            );
+            
+            const mailtoLink = `mailto:sebastian.preus@phinance.pl?subject=${subject}&body=${body}`;
+            
+            // Otwórz klienta email
+            window.location.href = mailtoLink;
+            
+            // Pokaż potwierdzenie
+            alert('Dziękujemy za wiadomość, ' + name + '! Otwieramy Twojego klienta email.');
+            
+            // Resetuj formularz
+            this.reset();
+        });
+    </script>
+</body>
+</html>
