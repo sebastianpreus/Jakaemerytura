@@ -54,60 +54,56 @@
         </div>
     </header>
 
+    <!-- 1. HERO z animowanymi liczbami -->
     <section class="hero">
         <img src="obrazy/hero-background.jpg" alt="Emerytura" class="hero-image">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1>Twoja emerytura z ZUS może być niewystarczająca</h1>
             <p>Dowiedz się, ile będzie Ci brakować i jak zadbać o swoją przyszłość finansową z pomocą eksperta</p>
+
+            <button class="hero-cta-btn" onclick="scrollToCalculator()">Sprawdź swoją lukę emerytalną →</button>
+
+            <div class="hero-stats">
+                <div class="hero-stat-card">
+                    <div class="hero-stat-number" data-target="35" data-suffix="%">0%</div>
+                    <div class="hero-stat-label">Twoja emerytura z ZUS<br>Czy to wystarczy?</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-number" data-target="25" data-suffix="%">0%</div>
+                    <div class="hero-stat-label">Stopa zastąpienia w 2060<br>Trend jest spadkowy</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-number" data-target="25" data-suffix="+">0+</div>
+                    <div class="hero-stat-label">Lat na emeryturze<br>To długi czas bez dochodu</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <div class="container">
-        <section class="problem-section fade-in-section">
-            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Problem emerytalny w Polsce</h2>
-            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
-                System emerytalny w Polsce stoi przed poważnymi wyzwaniami. Starzejące się społeczeństwo i coraz niższy stosunek pracujących do emerytów oznaczają, że przyszłe emerytury będą znacznie niższe niż obecne wynagrodzenia.
-            </p>
-
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">30-40%</div>
-                    <div class="stat-label">Ostatniego wynagrodzenia to przewidywana emerytura z ZUS</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">↓</div>
-                    <div class="stat-label">Stopa zastąpienia systematycznie spada</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">20-30 lat</div>
-                    <div class="stat-label">Tyle możesz spędzić na emeryturze</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="chart-section fade-in-section">
-            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Przeciętna miesięczna wypłata emerytury</h2>
-            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
-                Wzglądem przeciętnego wynagrodzenia w Polsce (w proc.)
-            </p>
-            <div class="chart-container">
-                <canvas id="retirementChart"></canvas>
-            </div>
-            <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">
-                * Wartości od 2030 to prognozy
-            </p>
-        </section>
-
+        <!-- 2. KALKULATOR LUKI EMERYTALNEJ (przeniesiony wyżej) -->
         <section class="calculator-section fade-in-section" id="calculator">
             <h2>🧮 Kalkulator luki emerytalnej</h2>
             <p class="calculator-subtitle">Sprawdź, ile będzie Ci brakować do komfortowej emerytury</p>
 
             <form class="calculator-form" id="retirementForm">
+                <!-- KROK 1: Kim jesteś? -->
+                <div class="form-group">
+                    <label for="salary">Twoje miesięczne zarobki netto:</label>
+                    <div class="input-suffix" data-suffix="zł">
+                        <input type="number" id="salary" min="1000" step="100" placeholder="np. 5 000" required>
+                    </div>
+                    <div class="quick-salary-buttons">
+                        <button type="button" class="quick-salary-btn" data-amount="3200" onclick="setSalary(3200)">Minimalna (~3 200 zł)</button>
+                        <button type="button" class="quick-salary-btn" data-amount="5800" onclick="setSalary(5800)">Średnia krajowa (~5 800 zł)</button>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="currentAge">Twój obecny wiek:</label>
                     <div class="input-suffix" data-suffix="lat">
-                        <input type="number" id="currentAge" min="18" max="67" required>
+                        <input type="number" id="currentAge" min="18" max="66" required>
                     </div>
                 </div>
 
@@ -130,41 +126,97 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="yearsInRetirement">Lat na emeryturze: <span id="yearsValue">20</span></label>
-                    <input type="range" id="yearsInRetirement" min="10" max="30" value="20" class="slider">
+                <!-- KROK 2: Prognozowana emerytura z ZUS -->
+                <div class="zus-estimate-box" id="zusEstimateBox">
+                    <div class="zus-estimate-label">Twoja szacowana emerytura z ZUS:</div>
+                    <div class="zus-estimate-value" id="zusEstimateValue">0 zł netto / miesiąc</div>
+                    <div class="zus-estimate-desc" id="zusEstimateDesc"></div>
+                    <div class="zus-estimate-hint">💡 Możesz wpisać inną kwotę poniżej jeśli znasz swoje prognozy z ZUS</div>
                 </div>
 
+                <div class="form-group">
+                    <label for="expectedPension">Emerytura z ZUS (edytowalne):</label>
+                    <div class="input-suffix" data-suffix="zł">
+                        <input type="number" id="expectedPension" min="0" step="100">
+                    </div>
+                </div>
+
+                <!-- KROK 3: Ile chcesz mieć? -->
                 <div class="form-group">
                     <label for="desiredPension">Ile chciałbyś mieć miesięcznie na emeryturze:</label>
                     <div class="input-suffix" data-suffix="zł">
-                        <input type="number" id="desiredPension" min="1000" step="100" required>
+                        <input type="number" id="desiredPension" min="1000" step="100" placeholder="np. 4 000" required>
+                    </div>
+                    <div class="form-hint">Pomyśl o swoich obecnych wydatkach miesięcznych</div>
+                </div>
+
+                <!-- KROK 4: Wynik -->
+                <div class="calc-result-box" id="resultBox">
+                    <h3>📊 Twoja luka emerytalna</h3>
+                    <div class="calc-result-row">
+                        <span class="calc-result-label">Miesięcznie brakuje Ci:</span>
+                        <span class="result-gap-value negative" id="resultGapMonthly">0 zł / miesiąc</span>
+                    </div>
+                    <div class="calc-result-row">
+                        <span class="calc-result-label">Przez całą emeryturę:</span>
+                        <span class="calc-result-value" id="resultGapTotal">0 zł łącznie</span>
+                    </div>
+                    <div class="calc-result-row">
+                        <span class="calc-result-label">Czas do emerytury:</span>
+                        <span class="calc-result-value" id="resultYearsTo">— lat</span>
+                    </div>
+                    <div class="calc-result-row">
+                        <span class="calc-result-label">Lata na emeryturze:</span>
+                        <span class="calc-result-value" id="resultYearsIn">— lat</span>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="expectedPension">Emerytura z ZUS:</label>
-                    <div class="input-suffix" data-suffix="zł">
-                        <input type="number" id="expectedPension" min="0" step="100" required>
-                    </div>
+                <!-- KROK 5: CTA po wyniku -->
+                <div class="calculator-cta">
+                    <p id="ctaDynamicText">To duże wyzwanie – ale rozwiązywalne. Skontaktuj się z nami, a wspólnie znajdziemy najlepszą ścieżkę do Twojej wymarzonej emerytury.</p>
+                    <button type="button" onclick="scrollToFooterForm()">Umów bezpłatną konsultację →</button>
                 </div>
-
-                <div class="total-needed-box" id="totalNeededBox">
-                    <div class="total-needed-label">Twoja luka emerytalna:</div>
-                    <div class="total-needed-value" id="totalNeededValue">0 zł</div>
-                    <div class="total-needed-info">To suma, którą musisz zgromadzić do emerytury</div>
-                </div>
-
-                <button type="button" class="calculate-btn" onclick="scrollToFooterForm()">Sprawdź swoją lukę emerytalną</button>
             </form>
+        </section>
 
-            <div class="calculator-cta">
-                <p>Twoja luka emerytalna to <strong><span id="gapMonthly">0 zł</span> miesięcznie</strong> / <strong><span id="gapTotal">0 zł</span> łącznie</strong>.</p>
-                <p>To duże wyzwanie – ale rozwiązywalne. Porozmawiajmy jak je zaadresować.</p>
-                <button onclick="scrollToFooterForm()">Umów bezpłatną konsultację →</button>
+        <!-- 3. PROBLEM EMERYTALNY (statystyki) -->
+        <section class="problem-section fade-in-section">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Problem emerytalny w Polsce</h2>
+            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
+                System emerytalny w Polsce stoi przed poważnymi wyzwaniami. Starzejące się społeczeństwo i coraz niższy stosunek pracujących do emerytów oznaczają, że przyszłe emerytury będą znacznie niższe niż obecne wynagrodzenia.
+            </p>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">30-40%</div>
+                    <div class="stat-label">Ostatniego wynagrodzenia to przewidywana emerytura z ZUS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">↓</div>
+                    <div class="stat-label">Stopa zastąpienia systematycznie spada</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20-30 lat</div>
+                    <div class="stat-label">Tyle możesz spędzić na emeryturze</div>
+                </div>
             </div>
         </section>
 
+        <!-- 4. WYKRES stopy zastąpienia -->
+        <section class="chart-section fade-in-section">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Przeciętna miesięczna wypłata emerytury</h2>
+            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
+                Wzglądem przeciętnego wynagrodzenia w Polsce (w proc.)
+            </p>
+            <div class="chart-container">
+                <canvas id="retirementChart"></canvas>
+            </div>
+            <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">
+                * Wartości od 2030 to prognozy
+            </p>
+        </section>
+
+        <!-- 5. KAFELKI "Co Cię niepokoi?" -->
         <section class="solutions-section fade-in-section">
             <h2>Co Cię niepokoi?</h2>
 
@@ -172,47 +224,48 @@
                 <a href="problem/emerytura-z-zus.html" class="solution-card">
                     <div class="solution-icon">😟</div>
                     <h3>Ile dostanę z ZUS?</h3>
-                    <p>Sprawdź, jak naprawdę wygląda prognoza Twojej emerytury i dlaczego może Cię zaskoczyć.</p>
+                    <p>Odpowiedź może Cię zaskoczyć – i nie zawsze pozytywnie.</p>
                     <span class="card-link">Dowiedz się więcej →</span>
                 </a>
 
                 <a href="problem/inflacja.html" class="solution-card">
                     <div class="solution-icon">📉</div>
                     <h3>Jak inflacja niszczy oszczędności?</h3>
-                    <p>Zobacz ile tracisz trzymając pieniądze na koncie i jak temu zapobiec.</p>
+                    <p>Pieniądze trzymane bezczynnie tracą na wartości każdego roku.</p>
                     <span class="card-link">Dowiedz się więcej →</span>
                 </a>
 
                 <a href="produkty/ike.html" class="solution-card">
                     <div class="solution-icon">🧮</div>
                     <h3>Jak nie tracić na podatkach?</h3>
-                    <p>Poznaj legalne sposoby na uniknięcie podatku od zysków kapitałowych.</p>
+                    <p>Część rozwiązań pozwala legalnie zatrzymać więcej dla siebie.</p>
                     <span class="card-link">Dowiedz się więcej →</span>
                 </a>
 
                 <a href="produkty/ppk.html" class="solution-card">
                     <div class="solution-icon">🏢</div>
                     <h3>Czy mam PPK i czy to wystarczy?</h3>
-                    <p>Dowiedz się, ile naprawdę zyskujesz w PPK i czy to wystarczy na emeryturę.</p>
+                    <p>PPK to dobry start, ale rzadko wystarczy jako jedyne źródło.</p>
                     <span class="card-link">Dowiedz się więcej →</span>
                 </a>
 
                 <a href="inwestowanie/etf-fundusze.html" class="solution-card">
                     <div class="solution-icon">📈</div>
                     <h3>Jak inwestować na emeryturę?</h3>
-                    <p>Poznaj proste i skuteczne sposoby budowania kapitału na przyszłość.</p>
+                    <p>Nie trzeba być ekspertem – trzeba wiedzieć od czego zacząć.</p>
                     <span class="card-link">Dowiedz się więcej →</span>
                 </a>
 
                 <a href="kalkulatory/index.html" class="solution-card">
                     <div class="solution-icon">🔍</div>
                     <h3>Od czego zacząć?</h3>
-                    <p>Skorzystaj z naszych kalkulatorów i sprawdź swoją sytuację emerytalną.</p>
+                    <p>Każda sytuacja jest inna. Sprawdź co działa w Twoim przypadku.</p>
                     <span class="card-link">Dowiedz się więcej →</span>
                 </a>
             </div>
         </section>
 
+        <!-- 6. CTA BANNER -->
         <section class="cta-section fade-in-section" id="contact">
             <h2>Gotowy zaplanować swoją emeryturę?</h2>
             <p>Skontaktuj się z nami, a pomożemy Ci wybrać najlepsze rozwiązanie dopasowane do Twoich potrzeb</p>
@@ -220,6 +273,7 @@
         </section>
     </div>
 
+    <!-- 7. FOOTER z formularzem -->
     <footer class="footer" id="footerForm">
         <div class="footer-content">
             <div class="footer-info-box">

@@ -217,6 +217,58 @@ body {
     opacity: 0.95;
 }
 
+.hero-cta-btn {
+    display: inline-block;
+    background: white;
+    color: #10b981;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 2.5rem;
+}
+
+.hero-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+/* Hero animated stats */
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-stat-card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 15px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+
+.hero-stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.hero-stat-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    color: white;
+    line-height: 1.4;
+}
+
 /* ========== CONTAINER ========== */
 
 .container {
@@ -485,6 +537,135 @@ body {
     font-size: 0.9rem;
     color: #666;
     margin-top: 0.5rem;
+}
+
+/* Quick salary buttons */
+.quick-salary-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.quick-salary-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #555;
+}
+
+.quick-salary-btn:hover {
+    border-color: #10b981;
+    background: #f0fdf4;
+    color: #059669;
+}
+
+.quick-salary-btn.active {
+    border-color: #10b981;
+    background: #10b981;
+    color: white;
+}
+
+/* ZUS estimate box (amber warning) */
+.zus-estimate-box {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+    display: none;
+    animation: slideIn 0.5s ease;
+}
+
+.zus-estimate-label {
+    font-size: 1rem;
+    color: #92400e;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.zus-estimate-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #b45309;
+    margin: 0.5rem 0;
+}
+
+.zus-estimate-desc {
+    font-size: 0.9rem;
+    color: #78350f;
+    margin-top: 0.75rem;
+    line-height: 1.5;
+}
+
+.zus-estimate-hint {
+    font-size: 0.85rem;
+    color: #92400e;
+    margin-top: 0.75rem;
+    font-style: italic;
+}
+
+/* Calculator result box */
+.calc-result-box {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f0 100%);
+    border: 2px solid #cbd5e1;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    display: none;
+}
+
+.calc-result-box h3 {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.calc-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.calc-result-row:last-child {
+    border-bottom: none;
+}
+
+.calc-result-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.result-gap-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.result-gap-value.negative {
+    color: #e74c3c;
+}
+
+.result-gap-value.positive {
+    color: #10b981;
+}
+
+.calc-result-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-hint {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 0.25rem;
 }
 
 .input-suffix {
@@ -1045,5 +1226,29 @@ body {
         font-size: 0.9rem;
         bottom: 1rem;
         right: 1rem;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .hero-stat-number {
+        font-size: 2rem;
+    }
+
+    .hero-cta-btn {
+        font-size: 1rem;
+        padding: 0.85rem 1.5rem;
+    }
+
+    .quick-salary-buttons {
+        flex-direction: column;
+    }
+
+    .calc-result-row {
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
     }
 }
