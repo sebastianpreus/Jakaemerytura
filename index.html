@@ -208,11 +208,26 @@
             <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
                 Wzglądem przeciętnego wynagrodzenia w Polsce (w proc.)
             </p>
+
+            <div class="chart-user-inputs">
+                <div class="chart-input-group">
+                    <label for="chartAge">Twój wiek:</label>
+                    <input type="number" id="chartAge" min="18" max="66" placeholder="np. 35">
+                </div>
+                <div class="chart-input-group">
+                    <label>Płeć:</label>
+                    <div class="chart-gender-buttons">
+                        <button type="button" class="chart-gender-btn" data-chart-gender="female" onclick="selectChartGender('female')">Kobieta</button>
+                        <button type="button" class="chart-gender-btn" data-chart-gender="male" onclick="selectChartGender('male')">Mężczyzna</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="chart-container">
                 <canvas id="retirementChart"></canvas>
             </div>
             <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">
-                * Wartości od 2030 to prognozy
+                * Wartości od 2030 to prognozy. <span id="chartUserInfo" style="color: #e74c3c; font-weight: 600;"></span>
             </p>
         </section>
 
@@ -318,45 +333,91 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
     <script>
-        // Chart - stopa zastąpienia
+        // Chart - stopa zastąpienia z personalizacją
         var ctx = document.getElementById('retirementChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, 'rgba(16, 185, 129, 0.5)');
         gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
 
-        new Chart(ctx, {
+        // Base data points
+        var chartBaseData = [
+            {x: 2014, y: 61.8}, {x: 2015, y: 61.5}, {x: 2016, y: 60.3},
+            {x: 2017, y: 58.5}, {x: 2018, y: 56.4},
+            {x: 2030, y: 47.1}, {x: 2040, y: 37.6}, {x: 2050, y: 28.7}, {x: 2060, y: 24.6}
+        ];
+
+        var retirementChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['2014', '2015', '2016', '2017', '2018', '2030*', '2040*', '2050*', '2060*'],
-                datasets: [{
-                    label: 'Stopa zastąpienia (%)',
-                    data: [61.8, 61.5, 60.3, 58.5, 56.4, 47.1, 37.6, 28.7, 24.6],
-                    borderColor: '#10b981',
-                    backgroundColor: gradient,
-                    borderWidth: 3,
-                    pointBackgroundColor: '#10b981',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 6,
-                    pointHoverRadius: 8,
-                    fill: true,
-                    tension: 0.4
-                }]
+                datasets: [
+                    {
+                        label: 'Stopa zastąpienia (%)',
+                        data: chartBaseData,
+                        borderColor: '#10b981',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#10b981',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        fill: true,
+                        tension: 0.4,
+                        order: 2
+                    },
+                    {
+                        label: 'Twoja emerytura',
+                        data: [],
+                        borderColor: '#e74c3c',
+                        backgroundColor: '#e74c3c',
+                        pointBackgroundColor: '#e74c3c',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 3,
+                        pointRadius: 10,
+                        pointHoverRadius: 13,
+                        showLine: false,
+                        order: 1
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
+                parsing: { xAxisKey: 'x', yAxisKey: 'y' },
                 plugins: {
                     legend: { display: false },
                     tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.85)',
                         titleColor: '#fff',
                         bodyColor: '#fff',
-                        padding: 12,
-                        displayColors: false,
+                        padding: 14,
+                        displayColors: true,
                         callbacks: {
+                            title: function(items) {
+                                if (!items.length) return '';
+                                var item = items[0];
+                                if (item.datasetIndex === 1) {
+                                    return 'Rok przejscia na emeryture: ' + Math.round(item.parsed.x);
+                                }
+                                return 'Rok: ' + Math.round(item.parsed.x);
+                            },
                             label: function(context) {
-                                return context.parsed.y + '%';
+                                if (context.datasetIndex === 1) {
+                                    var lines = ['Prognozowana stopa zastapienia: ' + context.parsed.y.toFixed(1) + '%'];
+                                    lines.push('Oznacza to, ze Twoja emerytura z ZUS moze');
+                                    lines.push('wynosic ok. ' + context.parsed.y.toFixed(0) + '% Twojego ostatniego wynagrodzenia.');
+                                    // Check if salary data available
+                                    var salaryInput = document.getElementById('salary');
+                                    if (salaryInput && salaryInput.value) {
+                                        var salary = parseFloat(salaryInput.value);
+                                        var estPension = Math.round(salary * context.parsed.y / 100);
+                                        lines.push('');
+                                        lines.push('Przy zarobkach ' + salary.toLocaleString('pl-PL') + ' zl');
+                                        lines.push('Twoja emerytura: ~' + estPension.toLocaleString('pl-PL') + ' zl/mies.');
+                                    }
+                                    return lines;
+                                }
+                                return 'Stopa zastapienia: ' + context.parsed.y + '%';
                             }
                         }
                     }
@@ -365,7 +426,7 @@
                     y: {
                         beginAtZero: false,
                         min: 20,
-                        max: 80,
+                        max: 70,
                         ticks: {
                             callback: function(value) { return value + '%'; },
                             font: { size: 12 }
@@ -373,12 +434,106 @@
                         grid: { color: 'rgba(0, 0, 0, 0.05)' }
                     },
                     x: {
-                        grid: { display: false },
-                        ticks: { font: { size: 12 } }
+                        type: 'linear',
+                        min: 2014,
+                        max: 2065,
+                        ticks: {
+                            font: { size: 12 },
+                            callback: function(value) {
+                                if (value >= 2030 && Number.isInteger(value) && value % 10 === 0) return value + '*';
+                                if (value < 2030 && Number.isInteger(value)) return value.toString();
+                                return '';
+                            },
+                            stepSize: 5
+                        },
+                        grid: { display: false }
                     }
                 },
-                interaction: { intersect: false, mode: 'index' }
+                interaction: { intersect: false, mode: 'nearest' }
             }
+        });
+
+        // Chart gender state
+        var chartGender = null;
+
+        function selectChartGender(gender) {
+            chartGender = gender;
+            document.querySelectorAll('.chart-gender-btn').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            var sel = document.querySelector('[data-chart-gender="' + gender + '"]');
+            if (sel) sel.classList.add('active');
+            updateChartUserPoint();
+        }
+
+        function updateChartUserPoint() {
+            var chartAgeInput = document.getElementById('chartAge');
+            var age = parseInt(chartAgeInput?.value) || 0;
+            var gender = chartGender;
+
+            if (age >= 18 && age <= 66 && gender) {
+                var retAge = gender === 'female' ? 60 : 65;
+                var currentYear = new Date().getFullYear();
+                var retYear = currentYear + (retAge - age);
+                var rate = getReplacementRate(retYear);
+                var ratePercent = parseFloat((rate * 100).toFixed(1));
+
+                // Update chart
+                retirementChart.data.datasets[1].data = [{x: retYear, y: ratePercent}];
+
+                // Extend x-axis if needed
+                if (retYear > 2065) {
+                    retirementChart.options.scales.x.max = retYear + 5;
+                }
+
+                retirementChart.update('none');
+
+                // Update info text
+                var infoEl = document.getElementById('chartUserInfo');
+                if (infoEl) {
+                    infoEl.textContent = 'Czerwona kropka = Twoja emerytura (' + retYear + ', ~' + ratePercent.toFixed(0) + '%)';
+                }
+            } else {
+                retirementChart.data.datasets[1].data = [];
+                retirementChart.update('none');
+                var infoEl2 = document.getElementById('chartUserInfo');
+                if (infoEl2) infoEl2.textContent = '';
+            }
+        }
+
+        // Listen for chart age input changes
+        document.getElementById('chartAge')?.addEventListener('input', updateChartUserPoint);
+
+        // Sync calculator age/gender to chart
+        function syncCalcToChart() {
+            var calcAge = document.getElementById('currentAge');
+            var chartAgeInput = document.getElementById('chartAge');
+            if (calcAge && chartAgeInput && calcAge.value && !chartAgeInput.dataset.userEdited) {
+                chartAgeInput.value = calcAge.value;
+            }
+            if (selectedGender && !chartGender) {
+                selectChartGender(selectedGender);
+            }
+            updateChartUserPoint();
+        }
+
+        // Patch calculator to sync to chart
+        var origSelectGender = selectGender;
+        selectGender = function(gender) {
+            origSelectGender(gender);
+            syncCalcToChart();
+        };
+
+        var calcAgeEl = document.getElementById('currentAge');
+        if (calcAgeEl) {
+            calcAgeEl.addEventListener('input', function() {
+                syncCalcToChart();
+            });
+        }
+
+        // Mark chart age as user-edited if user types in it directly
+        document.getElementById('chartAge')?.addEventListener('focus', function() {
+            this.dataset.userEdited = 'true';
         });
     </script>
 </body>
