@@ -202,24 +202,27 @@
             </div>
         </section>
 
-        <!-- 4. WYKRES stopy zastąpienia -->
-        <section class="chart-section fade-in-section">
-            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Przeciętna miesięczna wypłata emerytury</h2>
+        <!-- 4. WYKRES stopy zastąpienia (zasilany z kalkulatora) -->
+        <section class="chart-section fade-in-section" id="chartSection">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Twoja prognoza emerytalna</h2>
             <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
-                Wzglądem przeciętnego wynagrodzenia w Polsce (w proc.)
+                Stopa zastąpienia emerytury wzglądem wynagrodzenia w Polsce (w proc.)
             </p>
 
-            <div class="chart-user-inputs">
-                <div class="chart-input-group">
-                    <label for="chartAge">Twój wiek:</label>
-                    <input type="number" id="chartAge" min="18" max="66" placeholder="np. 35">
+            <!-- Podsumowanie danych użytkownika -->
+            <div class="chart-summary" id="chartSummary" style="display: none;">
+                <div class="chart-summary-card">
+                    <div class="chart-summary-label">Zarabiasz dziś:</div>
+                    <div class="chart-summary-value" id="chartSumSalary">— zł / miesiąc</div>
                 </div>
-                <div class="chart-input-group">
-                    <label>Płeć:</label>
-                    <div class="chart-gender-buttons">
-                        <button type="button" class="chart-gender-btn" data-chart-gender="female" onclick="selectChartGender('female')">Kobieta</button>
-                        <button type="button" class="chart-gender-btn" data-chart-gender="male" onclick="selectChartGender('male')">Mężczyzna</button>
-                    </div>
+                <div class="chart-summary-card chart-summary-warning">
+                    <div class="chart-summary-label">Prognozowana emerytura z ZUS:</div>
+                    <div class="chart-summary-value" id="chartSumPension">— zł / miesiąc</div>
+                    <div class="chart-summary-sub" id="chartSumPensionPct"></div>
+                </div>
+                <div class="chart-summary-card">
+                    <div class="chart-summary-label">Twoja oczekiwana emerytura:</div>
+                    <div class="chart-summary-value" id="chartSumDesired">— zł / miesiąc</div>
                 </div>
             </div>
 
@@ -227,8 +230,9 @@
                 <canvas id="retirementChart"></canvas>
             </div>
             <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">
-                * Wartości od 2030 to prognozy. <span id="chartUserInfo" style="color: #e74c3c; font-weight: 600;"></span>
+                * Wartości od 2030 to prognozy.
             </p>
+            <p class="chart-interpretation" id="chartInterpretation" style="display: none;"></p>
         </section>
 
         <!-- 5. KAFELKI "Co Cię niepokoi?" -->
@@ -333,13 +337,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
     <script>
-        // Chart - stopa zastąpienia z personalizacją
+        // Chart - stopa zastąpienia z danymi z kalkulatora
         var ctx = document.getElementById('retirementChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, 'rgba(16, 185, 129, 0.5)');
         gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
 
-        // Base data points
         var chartBaseData = [
             {x: 2014, y: 61.8}, {x: 2015, y: 61.5}, {x: 2016, y: 60.3},
             {x: 2017, y: 58.5}, {x: 2018, y: 56.4},
@@ -397,23 +400,18 @@
                                 if (!items.length) return '';
                                 var item = items[0];
                                 if (item.datasetIndex === 1) {
-                                    return 'Rok przejscia na emeryture: ' + Math.round(item.parsed.x);
+                                    return 'Twoja emerytura – rok: ' + Math.round(item.parsed.x);
                                 }
                                 return 'Rok: ' + Math.round(item.parsed.x);
                             },
                             label: function(context) {
                                 if (context.datasetIndex === 1) {
-                                    var lines = ['Prognozowana stopa zastapienia: ' + context.parsed.y.toFixed(1) + '%'];
-                                    lines.push('Oznacza to, ze Twoja emerytura z ZUS moze');
-                                    lines.push('wynosic ok. ' + context.parsed.y.toFixed(0) + '% Twojego ostatniego wynagrodzenia.');
-                                    // Check if salary data available
-                                    var salaryInput = document.getElementById('salary');
-                                    if (salaryInput && salaryInput.value) {
-                                        var salary = parseFloat(salaryInput.value);
+                                    var lines = ['Stopa zastapienia: ' + context.parsed.y.toFixed(1) + '%'];
+                                    var salary = parseFloat(document.getElementById('salary')?.value) || 0;
+                                    if (salary > 0) {
                                         var estPension = Math.round(salary * context.parsed.y / 100);
-                                        lines.push('');
-                                        lines.push('Przy zarobkach ' + salary.toLocaleString('pl-PL') + ' zl');
-                                        lines.push('Twoja emerytura: ~' + estPension.toLocaleString('pl-PL') + ' zl/mies.');
+                                        lines.push('Szacowana emerytura z ZUS:');
+                                        lines.push(estPension.toLocaleString('pl-PL') + ' zl / miesiac');
                                     }
                                     return lines;
                                 }
@@ -453,88 +451,69 @@
             }
         });
 
-        // Chart gender state
-        var chartGender = null;
+        // Update chart from calculator data
+        function updateChartFromCalc() {
+            var salary = parseFloat(document.getElementById('salary')?.value) || 0;
+            var age = parseInt(document.getElementById('currentAge')?.value) || 0;
+            var retAge = parseInt(document.getElementById('retirementAge')?.value) || 0;
+            var desiredPension = parseFloat(document.getElementById('desiredPension')?.value) || 0;
+            var expectedPension = parseFloat(document.getElementById('expectedPension')?.value) || 0;
 
-        function selectChartGender(gender) {
-            chartGender = gender;
-            document.querySelectorAll('.chart-gender-btn').forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            var sel = document.querySelector('[data-chart-gender="' + gender + '"]');
-            if (sel) sel.classList.add('active');
-            updateChartUserPoint();
-        }
+            var summary = document.getElementById('chartSummary');
+            var interpretation = document.getElementById('chartInterpretation');
 
-        function updateChartUserPoint() {
-            var chartAgeInput = document.getElementById('chartAge');
-            var age = parseInt(chartAgeInput?.value) || 0;
-            var gender = chartGender;
-
-            if (age >= 18 && age <= 66 && gender) {
-                var retAge = gender === 'female' ? 60 : 65;
+            if (salary > 0 && age >= 18 && age <= 66 && selectedGender && retAge > 0) {
                 var currentYear = new Date().getFullYear();
                 var retYear = currentYear + (retAge - age);
                 var rate = getReplacementRate(retYear);
                 var ratePercent = parseFloat((rate * 100).toFixed(1));
+                var estPension = Math.round(salary * rate);
 
-                // Update chart
+                // Update red dot
                 retirementChart.data.datasets[1].data = [{x: retYear, y: ratePercent}];
-
-                // Extend x-axis if needed
                 if (retYear > 2065) {
                     retirementChart.options.scales.x.max = retYear + 5;
                 }
-
                 retirementChart.update('none');
 
-                // Update info text
-                var infoEl = document.getElementById('chartUserInfo');
-                if (infoEl) {
-                    infoEl.textContent = 'Czerwona kropka = Twoja emerytura (' + retYear + ', ~' + ratePercent.toFixed(0) + '%)';
+                // Update summary cards
+                document.getElementById('chartSumSalary').textContent = salary.toLocaleString('pl-PL') + ' zl / miesiac';
+                document.getElementById('chartSumPension').textContent = estPension.toLocaleString('pl-PL') + ' zl / miesiac';
+                document.getElementById('chartSumPensionPct').textContent = '(ok. ' + Math.round(ratePercent) + '% wynagrodzenia)';
+                if (desiredPension > 0) {
+                    document.getElementById('chartSumDesired').textContent = desiredPension.toLocaleString('pl-PL') + ' zl / miesiac';
+                } else {
+                    document.getElementById('chartSumDesired').textContent = '— zl / miesiac';
+                }
+                if (summary) summary.style.display = '';
+
+                // Interpretation
+                if (interpretation) {
+                    interpretation.textContent = 'Przy obecnych trendach Twoja emerytura z ZUS moze wynosic okolo '
+                        + Math.round(ratePercent) + '% Twojego wynagrodzenia, czyli okolo '
+                        + estPension.toLocaleString('pl-PL') + ' zl miesiecznie.';
+                    interpretation.style.display = '';
                 }
             } else {
                 retirementChart.data.datasets[1].data = [];
                 retirementChart.update('none');
-                var infoEl2 = document.getElementById('chartUserInfo');
-                if (infoEl2) infoEl2.textContent = '';
+                if (summary) summary.style.display = 'none';
+                if (interpretation) interpretation.style.display = 'none';
             }
         }
 
-        // Listen for chart age input changes
-        document.getElementById('chartAge')?.addEventListener('input', updateChartUserPoint);
-
-        // Sync calculator age/gender to chart
-        function syncCalcToChart() {
-            var calcAge = document.getElementById('currentAge');
-            var chartAgeInput = document.getElementById('chartAge');
-            if (calcAge && chartAgeInput && calcAge.value && !chartAgeInput.dataset.userEdited) {
-                chartAgeInput.value = calcAge.value;
-            }
-            if (selectedGender && !chartGender) {
-                selectChartGender(selectedGender);
-            }
-            updateChartUserPoint();
-        }
-
-        // Patch calculator to sync to chart
-        var origSelectGender = selectGender;
-        selectGender = function(gender) {
-            origSelectGender(gender);
-            syncCalcToChart();
+        // Hook into calculator updates
+        var _origUpdateCalc = updateCalculator;
+        updateCalculator = function() {
+            _origUpdateCalc();
+            updateChartFromCalc();
         };
 
-        var calcAgeEl = document.getElementById('currentAge');
-        if (calcAgeEl) {
-            calcAgeEl.addEventListener('input', function() {
-                syncCalcToChart();
-            });
-        }
-
-        // Mark chart age as user-edited if user types in it directly
-        document.getElementById('chartAge')?.addEventListener('focus', function() {
-            this.dataset.userEdited = 'true';
-        });
+        var _origCalcGap = calculateGap;
+        calculateGap = function() {
+            _origCalcGap();
+            updateChartFromCalc();
+        };
     </script>
 </body>
 </html>

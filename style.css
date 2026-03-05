@@ -303,75 +303,65 @@ body {
     padding: 2rem;
 }
 
-/* Chart user inputs */
-.chart-user-inputs {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-    padding: 1rem 2rem;
+/* Chart summary cards */
+.chart-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto 1.5rem;
+}
+
+.chart-summary-card {
     background: #f0fdf4;
     border-radius: 12px;
-    max-width: 500px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    border: 1px solid #d1fae5;
+}
+
+.chart-summary-card.chart-summary-warning {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-color: #f59e0b;
+}
+
+.chart-summary-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.35rem;
+    font-weight: 500;
+}
+
+.chart-summary-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.chart-summary-warning .chart-summary-value {
+    color: #b45309;
+}
+
+.chart-summary-sub {
+    font-size: 0.8rem;
+    color: #92400e;
+    margin-top: 0.25rem;
+}
+
+/* Chart interpretation */
+.chart-interpretation {
+    text-align: center;
+    font-size: 1.05rem;
+    color: #333;
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    background: #f0fdf4;
+    border-radius: 10px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.chart-input-group {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.chart-input-group label {
-    font-weight: 600;
-    color: #333;
-    font-size: 0.95rem;
-    white-space: nowrap;
-}
-
-.chart-input-group input {
-    width: 80px;
-    padding: 0.5rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-align: center;
-}
-
-.chart-input-group input:focus {
-    outline: none;
-    border-color: #10b981;
-}
-
-.chart-gender-buttons {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.chart-gender-btn {
-    padding: 0.4rem 0.8rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    background: white;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    color: #333;
-}
-
-.chart-gender-btn:hover {
-    border-color: #10b981;
-    background: #f0fdf4;
-}
-
-.chart-gender-btn.active {
-    border-color: #10b981;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: white;
+    font-weight: 500;
+    line-height: 1.6;
 }
 
 .section-title {
@@ -1323,8 +1313,12 @@ body {
         text-align: center;
     }
 
-    .chart-user-inputs {
-        flex-direction: column;
-        gap: 1rem;
+    .chart-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-interpretation {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
     }
 }
