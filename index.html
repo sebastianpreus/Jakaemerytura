@@ -82,7 +82,30 @@
     </section>
 
     <div class="container">
-        <!-- 2. KALKULATOR LUKI EMERYTALNEJ (przeniesiony wyżej) -->
+        <!-- 2. PROBLEM EMERYTALNY (statystyki) -->
+        <section class="problem-section fade-in-section">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Problem emerytalny w Polsce</h2>
+            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
+                System emerytalny w Polsce stoi przed poważnymi wyzwaniami. Starzejące się społeczeństwo i coraz niższy stosunek pracujących do emerytów oznaczają, że przyszłe emerytury będą znacznie niższe niż obecne wynagrodzenia.
+            </p>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">30-40%</div>
+                    <div class="stat-label">Ostatniego wynagrodzenia to przewidywana emerytura z ZUS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">↓</div>
+                    <div class="stat-label">Stopa zastąpienia systematycznie spada</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20-30 lat</div>
+                    <div class="stat-label">Tyle możesz spędzić na emeryturze</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. KALKULATOR LUKI EMERYTALNEJ -->
         <section class="calculator-section fade-in-section" id="calculator">
             <h2>🧮 Kalkulator luki emerytalnej</h2>
             <p class="calculator-subtitle">Sprawdź, ile będzie Ci brakować do komfortowej emerytury</p>
@@ -171,7 +194,46 @@
                     </div>
                 </div>
 
-                <!-- KROK 5: CTA po wyniku -->
+                <!-- KROK 5: Wizualizacja wyniku -->
+                <div class="chart-inside-calc" id="chartSection">
+                    <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 0.5rem; color: #333;">Jak będzie wyglądać Twoja emerytura</h3>
+                    <p style="text-align: center; color: #666; max-width: 600px; margin: 0 auto 1.5rem; font-size: 0.95rem;">
+                        Prognozowana wysokość emerytury z ZUS względem Twojego wynagrodzenia.
+                    </p>
+
+                    <!-- Podsumowanie danych użytkownika -->
+                    <div class="chart-summary" id="chartSummary" style="display: none;">
+                        <div class="chart-summary-card chart-summary-neutral">
+                            <div class="chart-summary-label">Zarabiasz dziś:</div>
+                            <div class="chart-summary-value" id="chartSumSalary">— zł / miesiąc</div>
+                        </div>
+                        <div class="chart-summary-card chart-summary-warning">
+                            <div class="chart-summary-label">Prognozowana emerytura z ZUS:</div>
+                            <div class="chart-summary-value" id="chartSumPension">— zł / miesiąc</div>
+                            <div class="chart-summary-sub" id="chartSumPensionPct"></div>
+                        </div>
+                        <div class="chart-summary-card chart-summary-positive">
+                            <div class="chart-summary-label">Twoja oczekiwana emerytura:</div>
+                            <div class="chart-summary-value" id="chartSumDesired">— zł / miesiąc</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-gap-box" id="chartGapBox" style="display: none;">
+                        <div class="chart-gap-label">Brakuje Ci</div>
+                        <div class="chart-gap-value" id="chartGapValue">— zł miesięcznie</div>
+                        <div class="chart-gap-total" id="chartGapTotal"></div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="retirementChart"></canvas>
+                    </div>
+                    <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">
+                        * Wartości od 2030 to prognozy.
+                    </p>
+                    <p class="chart-interpretation" id="chartInterpretation" style="display: none;"></p>
+                </div>
+
+                <!-- KROK 6: CTA po wyniku -->
                 <div class="calculator-cta">
                     <p id="ctaDynamicText">To duże wyzwanie – ale rozwiązywalne. Skontaktuj się z nami, a wspólnie znajdziemy najlepszą ścieżkę do Twojej wymarzonej emerytury.</p>
                     <button type="button" onclick="scrollToFooterForm()">Umów bezpłatną konsultację →</button>
@@ -179,69 +241,7 @@
             </form>
         </section>
 
-        <!-- 3. PROBLEM EMERYTALNY (statystyki) -->
-        <section class="problem-section fade-in-section">
-            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Problem emerytalny w Polsce</h2>
-            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
-                System emerytalny w Polsce stoi przed poważnymi wyzwaniami. Starzejące się społeczeństwo i coraz niższy stosunek pracujących do emerytów oznaczają, że przyszłe emerytury będą znacznie niższe niż obecne wynagrodzenia.
-            </p>
-
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">30-40%</div>
-                    <div class="stat-label">Ostatniego wynagrodzenia to przewidywana emerytura z ZUS</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">↓</div>
-                    <div class="stat-label">Stopa zastąpienia systematycznie spada</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">20-30 lat</div>
-                    <div class="stat-label">Tyle możesz spędzić na emeryturze</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. WYKRES stopy zastąpienia (zasilany z kalkulatora) -->
-        <section class="chart-section fade-in-section" id="chartSection">
-            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Twoja prognoza emerytalna</h2>
-            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">
-                Stopa zastąpienia emerytury wzglądem wynagrodzenia w Polsce (w proc.)
-            </p>
-
-            <!-- Podsumowanie danych użytkownika -->
-            <div class="chart-summary" id="chartSummary" style="display: none;">
-                <div class="chart-summary-card chart-summary-neutral">
-                    <div class="chart-summary-label">Zarabiasz dziś:</div>
-                    <div class="chart-summary-value" id="chartSumSalary">— zł / miesiąc</div>
-                </div>
-                <div class="chart-summary-card chart-summary-warning">
-                    <div class="chart-summary-label">Prognozowana emerytura z ZUS:</div>
-                    <div class="chart-summary-value" id="chartSumPension">— zł / miesiąc</div>
-                    <div class="chart-summary-sub" id="chartSumPensionPct"></div>
-                </div>
-                <div class="chart-summary-card chart-summary-positive">
-                    <div class="chart-summary-label">Twoja oczekiwana emerytura:</div>
-                    <div class="chart-summary-value" id="chartSumDesired">— zł / miesiąc</div>
-                </div>
-            </div>
-
-            <div class="chart-gap-box" id="chartGapBox" style="display: none;">
-                <div class="chart-gap-label">Brakuje Ci</div>
-                <div class="chart-gap-value" id="chartGapValue">— zł miesięcznie</div>
-                <div class="chart-gap-total" id="chartGapTotal"></div>
-            </div>
-
-            <div class="chart-container">
-                <canvas id="retirementChart"></canvas>
-            </div>
-            <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">
-                * Wartości od 2030 to prognozy.
-            </p>
-            <p class="chart-interpretation" id="chartInterpretation" style="display: none;"></p>
-        </section>
-
-        <!-- 5. KAFELKI "Co Cię niepokoi?" -->
+        <!-- 4. KAFELKI "Co Cię niepokoi?" -->
         <section class="solutions-section fade-in-section">
             <h2>Co Cię niepokoi?</h2>
 
@@ -290,7 +290,7 @@
             </div>
         </section>
 
-        <!-- 6. CTA BANNER -->
+        <!-- 5. CTA BANNER -->
         <section class="cta-section fade-in-section" id="contact">
             <h2>Gotowy zaplanować swoją emeryturę?</h2>
             <p>Skontaktuj się z nami, a pomożemy Ci wybrać najlepsze rozwiązanie dopasowane do Twoich potrzeb</p>
@@ -298,7 +298,7 @@
         </section>
     </div>
 
-    <!-- 7. FOOTER z formularzem -->
+    <!-- 6. FOOTER z formularzem -->
     <footer class="footer" id="footerForm">
         <div class="footer-content">
             <div class="footer-info-box">
@@ -382,8 +382,8 @@
                 // Permanent label above dot
                 if (chartLabelData.pension > 0) {
                     cctx.save();
-                    var lx = pt.x;
-                    var ly = pt.y - 22;
+                    var lx = pt.x - 10;
+                    var ly = pt.y - 28;
                     var line1 = 'Twoja emerytura';
                     var line2 = chartLabelData.year + ' rok';
                     var line3 = chartLabelData.pension.toLocaleString('pl-PL') + ' zl / mies.';
@@ -626,15 +626,15 @@
 
                 // Interpretation
                 if (interpretation) {
-                    var html = 'Przy obecnych trendach Twoja emerytura z ZUS moze wynosic okolo <strong>'
-                        + Math.round(ratePercent) + '% Twojego wynagrodzenia</strong>.<br>To okolo <strong>'
+                    var html = 'Przy obecnych trendach Twoja emerytura z ZUS moze wynosic okolo<br><strong>'
+                        + Math.round(ratePercent) + '% Twojego wynagrodzenia</strong>.<br><br>To okolo<br><strong>'
                         + estPension.toLocaleString('pl-PL') + ' zl miesiecznie</strong>.';
                     if (desiredPension > 0) {
                         var pensionForGap2 = expectedPension > 0 ? expectedPension : estPension;
                         var gap2 = desiredPension - pensionForGap2;
                         if (gap2 > 0) {
                             html += '<br><br>Aby osiagnac emeryture <strong>'
-                                + desiredPension.toLocaleString('pl-PL') + ' zl miesiecznie</strong>, bedzie brakowac okolo <strong>'
+                                + desiredPension.toLocaleString('pl-PL') + ' zl miesiecznie</strong>,<br>bedzie brakowac okolo <strong>'
                                 + gap2.toLocaleString('pl-PL') + ' zl</strong>.';
                         }
                     }
