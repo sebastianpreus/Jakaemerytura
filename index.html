@@ -211,7 +211,7 @@
 
             <!-- Podsumowanie danych użytkownika -->
             <div class="chart-summary" id="chartSummary" style="display: none;">
-                <div class="chart-summary-card">
+                <div class="chart-summary-card chart-summary-neutral">
                     <div class="chart-summary-label">Zarabiasz dziś:</div>
                     <div class="chart-summary-value" id="chartSumSalary">— zł / miesiąc</div>
                 </div>
@@ -220,10 +220,15 @@
                     <div class="chart-summary-value" id="chartSumPension">— zł / miesiąc</div>
                     <div class="chart-summary-sub" id="chartSumPensionPct"></div>
                 </div>
-                <div class="chart-summary-card">
+                <div class="chart-summary-card chart-summary-positive">
                     <div class="chart-summary-label">Twoja oczekiwana emerytura:</div>
                     <div class="chart-summary-value" id="chartSumDesired">— zł / miesiąc</div>
                 </div>
+            </div>
+
+            <div class="chart-gap-box" id="chartGapBox" style="display: none;">
+                <div class="chart-gap-label">Twoja luka emerytalna</div>
+                <div class="chart-gap-value" id="chartGapValue">— zł / miesiąc</div>
             </div>
 
             <div class="chart-container">
@@ -349,8 +354,44 @@
             {x: 2030, y: 47.1}, {x: 2040, y: 37.6}, {x: 2050, y: 28.7}, {x: 2060, y: 24.6}
         ];
 
+        // Pulse animation plugin for the red dot
+        var pulsePlugin = {
+            id: 'pulsePoint',
+            afterDraw: function(chart) {
+                var ds = chart.data.datasets[1];
+                if (!ds || !ds.data || ds.data.length === 0) return;
+                var meta = chart.getDatasetMeta(1);
+                if (!meta.data || !meta.data[0]) return;
+                var pt = meta.data[0];
+                var cctx = chart.ctx;
+                var t = (Date.now() % 2000) / 2000;
+                var alpha = 0.35 * (1 - t);
+                var radius = 12 + 14 * t;
+                cctx.save();
+                cctx.beginPath();
+                cctx.arc(pt.x, pt.y, radius, 0, Math.PI * 2);
+                cctx.strokeStyle = 'rgba(231, 76, 60, ' + alpha + ')';
+                cctx.lineWidth = 2;
+                cctx.stroke();
+                cctx.restore();
+            }
+        };
+        var pulseTimer = null;
+        function startPulse() {
+            if (pulseTimer) return;
+            pulseTimer = setInterval(function() {
+                if (retirementChart.data.datasets[1].data.length > 0) {
+                    retirementChart.draw();
+                } else {
+                    clearInterval(pulseTimer);
+                    pulseTimer = null;
+                }
+            }, 50);
+        }
+
         var retirementChart = new Chart(ctx, {
             type: 'line',
+            plugins: [pulsePlugin],
             data: {
                 datasets: [
                     {
@@ -376,8 +417,8 @@
                         pointBackgroundColor: '#e74c3c',
                         pointBorderColor: '#fff',
                         pointBorderWidth: 3,
-                        pointRadius: 10,
-                        pointHoverRadius: 13,
+                        pointRadius: 12,
+                        pointHoverRadius: 15,
                         showLine: false,
                         order: 1
                     }
@@ -400,20 +441,18 @@
                                 if (!items.length) return '';
                                 var item = items[0];
                                 if (item.datasetIndex === 1) {
-                                    return 'Twoja emerytura – rok: ' + Math.round(item.parsed.x);
+                                    return 'Twoja emerytura (rok ' + Math.round(item.parsed.x) + ')';
                                 }
                                 return 'Rok: ' + Math.round(item.parsed.x);
                             },
                             label: function(context) {
                                 if (context.datasetIndex === 1) {
-                                    var lines = ['Stopa zastapienia: ' + context.parsed.y.toFixed(1) + '%'];
                                     var salary = parseFloat(document.getElementById('salary')?.value) || 0;
-                                    if (salary > 0) {
-                                        var estPension = Math.round(salary * context.parsed.y / 100);
-                                        lines.push('Szacowana emerytura z ZUS:');
-                                        lines.push(estPension.toLocaleString('pl-PL') + ' zl / miesiac');
-                                    }
-                                    return lines;
+                                    var estPension = salary > 0 ? Math.round(salary * context.parsed.y / 100) : 0;
+                                    return [
+                                        context.parsed.y.toFixed(1) + '% wynagrodzenia',
+                                        estPension > 0 ? estPension.toLocaleString('pl-PL') + ' zl / miesiac' : ''
+                                    ].filter(Boolean);
                                 }
                                 return 'Stopa zastapienia: ' + context.parsed.y + '%';
                             }
@@ -461,6 +500,7 @@
 
             var summary = document.getElementById('chartSummary');
             var interpretation = document.getElementById('chartInterpretation');
+            var gapBox = document.getElementById('chartGapBox');
 
             if (salary > 0 && age >= 18 && age <= 66 && selectedGender && retAge > 0) {
                 var currentYear = new Date().getFullYear();
@@ -475,6 +515,7 @@
                     retirementChart.options.scales.x.max = retYear + 5;
                 }
                 retirementChart.update('none');
+                startPulse();
 
                 // Update summary cards
                 document.getElementById('chartSumSalary').textContent = salary.toLocaleString('pl-PL') + ' zl / miesiac';
@@ -487,18 +528,46 @@
                 }
                 if (summary) summary.style.display = '';
 
+                // Gap box
+                if (gapBox) {
+                    var pensionForGap = expectedPension > 0 ? expectedPension : estPension;
+                    if (desiredPension > 0 && pensionForGap > 0) {
+                        var gap = desiredPension - pensionForGap;
+                        if (gap > 0) {
+                            document.getElementById('chartGapValue').textContent = gap.toLocaleString('pl-PL') + ' zl / miesiac';
+                            gapBox.style.display = '';
+                        } else {
+                            gapBox.style.display = 'none';
+                        }
+                    } else {
+                        gapBox.style.display = 'none';
+                    }
+                }
+
                 // Interpretation
                 if (interpretation) {
-                    interpretation.textContent = 'Przy obecnych trendach Twoja emerytura z ZUS moze wynosic okolo '
-                        + Math.round(ratePercent) + '% Twojego wynagrodzenia, czyli okolo '
-                        + estPension.toLocaleString('pl-PL') + ' zl miesiecznie.';
+                    var html = 'Przy obecnych trendach Twoja emerytura z ZUS moze wynosic okolo <strong>'
+                        + Math.round(ratePercent) + '% Twojego wynagrodzenia</strong>.<br>To okolo <strong>'
+                        + estPension.toLocaleString('pl-PL') + ' zl miesiecznie</strong>.';
+                    if (desiredPension > 0) {
+                        var pensionForGap2 = expectedPension > 0 ? expectedPension : estPension;
+                        var gap2 = desiredPension - pensionForGap2;
+                        if (gap2 > 0) {
+                            html += '<br><br>Jesli Twoim celem jest emerytura na poziomie <strong>'
+                                + desiredPension.toLocaleString('pl-PL') + ' zl miesiecznie</strong>, bedzie brakowac okolo <strong>'
+                                + gap2.toLocaleString('pl-PL') + ' zl miesiecznie</strong>.';
+                        }
+                    }
+                    interpretation.innerHTML = html;
                     interpretation.style.display = '';
                 }
             } else {
                 retirementChart.data.datasets[1].data = [];
                 retirementChart.update('none');
+                if (pulseTimer) { clearInterval(pulseTimer); pulseTimer = null; }
                 if (summary) summary.style.display = 'none';
                 if (interpretation) interpretation.style.display = 'none';
+                if (gapBox) gapBox.style.display = 'none';
             }
         }
 
