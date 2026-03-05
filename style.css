@@ -382,9 +382,16 @@ body {
 }
 
 .chart-gap-value {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 800;
     color: #dc2626;
+}
+
+.chart-gap-total {
+    font-size: 0.9rem;
+    color: #991b1b;
+    margin-top: 0.5rem;
+    line-height: 1.4;
 }
 
 /* Chart interpretation */
