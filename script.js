@@ -175,8 +175,8 @@ function setSalary(amount) {
 function toggleBusiness(checked) {
     var salaryInput = document.getElementById('salary');
     if (checked) {
-        // Minimalna podstawa składek ZUS dla DG (~4694 zł brutto ≈ ok. 4700 zł)
-        salaryInput.value = 4700;
+        // DG na minimalnych składkach ZUS - netto ~3200 zł
+        salaryInput.value = 3200;
         // Deactivate quick salary buttons
         document.querySelectorAll('.quick-salary-btn').forEach(function(btn) {
             btn.classList.remove('active');
