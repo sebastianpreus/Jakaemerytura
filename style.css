@@ -1083,7 +1083,7 @@ body {
 .solutions-section {
     padding: 2.5rem 2rem;
     background: white;
-    margin: 3rem 0;
+    margin: 1rem 0;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 }
@@ -1195,7 +1195,7 @@ body {
     padding: 4rem 2rem;
     text-align: center;
     border-radius: 20px;
-    margin: 3rem 0;
+    margin: 1rem 0;
 }
 
 .cta-section h2 {
