@@ -389,6 +389,25 @@ body {
     line-height: 1.4;
 }
 
+/* No-gap (positive) variant */
+.chart-no-gap-box {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%) !important;
+    border-color: #10b981 !important;
+}
+
+.chart-no-gap-box .chart-gap-label {
+    color: #065f46;
+}
+
+.chart-no-gap-box .chart-gap-value {
+    color: #059669;
+    font-size: 1.5rem;
+}
+
+.chart-no-gap-box .chart-gap-total {
+    color: #065f46;
+}
+
 /* Chart interpretation */
 .chart-interpretation {
     text-align: center;

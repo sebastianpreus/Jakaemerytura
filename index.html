@@ -219,6 +219,12 @@
                             <div class="chart-gap-total" id="chartGapTotal"></div>
                         </div>
 
+                        <div class="chart-gap-box chart-no-gap-box" id="chartNoGapBox" style="display: none;">
+                            <div class="chart-gap-label">🎉 Gratulacje!</div>
+                            <div class="chart-gap-value">Twoja emerytura wystarczy</div>
+                            <div class="chart-gap-total">Mimo to warto się upewnić, że Twój plan jest optymalny — porozmawiaj z ekspertem</div>
+                        </div>
+
                         <div class="chart-container">
                             <canvas id="retirementChart"></canvas>
                         </div>
@@ -600,6 +606,7 @@
                 if (summary) summary.style.display = '';
 
                 // Gap box
+                var noGapBox = document.getElementById('chartNoGapBox');
                 if (gapBox) {
                     var pensionForGap = expectedPension > 0 ? expectedPension : estPension;
                     if (desiredPension > 0 && pensionForGap > 0) {
@@ -612,11 +619,14 @@
                             document.getElementById('chartGapTotal').innerHTML = 'To okolo <strong>'
                                 + totalGap.toLocaleString('pl-PL') + ' zl</strong> przez ' + retYears + ' lat emerytury';
                             gapBox.style.display = '';
+                            if (noGapBox) noGapBox.style.display = 'none';
                         } else {
                             gapBox.style.display = 'none';
+                            if (noGapBox) noGapBox.style.display = '';
                         }
                     } else {
                         gapBox.style.display = 'none';
+                        if (noGapBox) noGapBox.style.display = 'none';
                     }
                 }
 
@@ -645,6 +655,8 @@
                 if (summary) summary.style.display = 'none';
                 if (interpretation) interpretation.style.display = 'none';
                 if (gapBox) gapBox.style.display = 'none';
+                var noGapBox2 = document.getElementById('chartNoGapBox');
+                if (noGapBox2) noGapBox2.style.display = 'none';
             }
         }
 
