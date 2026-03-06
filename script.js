@@ -140,9 +140,9 @@ function getReplacementRate(year) {
     return 0.30; // fallback
 }
 
-// Life expectancy
-function getLifeExpectancy(gender) {
-    return gender === 'female' ? 82 : 74;
+// Years in retirement (average for Poland)
+function getYearsInRetirement() {
+    return 20;
 }
 
 function getRetirementAge(gender) {
@@ -236,9 +236,7 @@ function calculateGap() {
 
     if (desiredPension > 0 && expectedPension > 0 && selectedGender && currentAge >= 18) {
         var monthlyGap = desiredPension - expectedPension;
-        var lifeExpectancy = getLifeExpectancy(selectedGender);
-        var yearsInRetirement = lifeExpectancy - retirementAge;
-        if (yearsInRetirement < 1) yearsInRetirement = 1;
+        var yearsInRetirement = getYearsInRetirement();
         var totalGap = monthlyGap * yearsInRetirement * 12;
         var yearsToRetirement = retirementAge - currentAge;
 
@@ -266,8 +264,7 @@ function calculateGap() {
         }
         if (yearsToEl) yearsToEl.textContent = yearsToRetirement + ' lat';
         if (yearsInEl) {
-            var lifeLabel = selectedGender === 'female' ? '(kobiety ~82 l.)' : '(mezczyzni ~74 l.)';
-            yearsInEl.textContent = '~' + yearsInRetirement + ' lat ' + lifeLabel;
+            yearsInEl.textContent = '~' + yearsInRetirement + ' lat';
         }
 
         if (resultBox) {

@@ -151,13 +151,6 @@
                             </div>
                         </div>
 
-                        <div class="zus-estimate-box" id="zusEstimateBox">
-                            <div class="zus-estimate-label">Twoja szacowana emerytura z ZUS:</div>
-                            <div class="zus-estimate-value" id="zusEstimateValue">0 zł netto / miesiąc</div>
-                            <div class="zus-estimate-desc" id="zusEstimateDesc"></div>
-                            <div class="zus-estimate-hint">💡 Możesz wpisać inną kwotę poniżej jeśli znasz swoje prognozy z ZUS</div>
-                        </div>
-
                         <div class="calc-result-box" id="resultBox">
                             <h3>📊 Twoja luka emerytalna</h3>
                             <div class="calc-result-row">
@@ -609,9 +602,7 @@
                         if (gap > 0) {
                             document.getElementById('chartGapValue').textContent = gap.toLocaleString('pl-PL') + ' zl miesiecznie';
                             // Total gap over retirement years
-                            var lifeExp = getLifeExpectancy(selectedGender);
-                            var retYears = lifeExp - retAge;
-                            if (retYears < 1) retYears = 1;
+                            var retYears = getYearsInRetirement();
                             var totalGap = gap * 12 * retYears;
                             document.getElementById('chartGapTotal').innerHTML = 'To okolo <strong>'
                                 + totalGap.toLocaleString('pl-PL') + ' zl</strong> przez ' + retYears + ' lat emerytury';
