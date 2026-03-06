@@ -158,10 +158,10 @@ body {
 .hero {
     position: relative;
     color: white;
-    padding: 1.75rem 2rem 2.5rem;
+    padding: 1.5rem 2rem 4rem;
     text-align: center;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     overflow: hidden;
 }
@@ -207,14 +207,14 @@ body {
 
 .hero h1 {
     font-size: 2.2rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     font-weight: 700;
 }
 
 .hero p {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     max-width: 700px;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 1rem;
     opacity: 0.95;
 }
 
@@ -222,15 +222,15 @@ body {
     display: inline-block;
     background: white;
     color: #10b981;
-    padding: 0.85rem 1.75rem;
+    padding: 0.75rem 1.75rem;
     border-radius: 30px;
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
     border: none;
     transition: transform 0.3s, box-shadow 0.3s;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .hero-cta-btn:hover {
@@ -282,8 +282,8 @@ body {
 
 .problem-section {
     background: white;
-    padding: 2rem 2rem 1.5rem;
-    margin-top: -2rem;
+    padding: 1.5rem 2rem 1rem;
+    margin-top: -3rem;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     position: relative;
@@ -503,8 +503,8 @@ body {
 
 .calculator-section {
     background: white;
-    padding: 2rem 2rem;
-    margin: 1.25rem 0;
+    padding: 1.75rem 2rem;
+    margin: 1rem 0;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 }
