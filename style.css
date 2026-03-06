@@ -535,6 +535,20 @@ body {
     /* form fields column */
 }
 
+.calc-col-heading {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.calc-col-subheading {
+    text-align: center;
+    color: #666;
+    margin: 0 auto 1rem;
+    font-size: 0.9rem;
+}
+
 .calc-col-right {
     position: sticky;
     top: 80px;
