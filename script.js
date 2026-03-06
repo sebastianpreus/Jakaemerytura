@@ -164,8 +164,25 @@ function setSalary(amount) {
                 btn.classList.add('active');
             }
         });
+        // Uncheck business toggle
+        var bizToggle = document.getElementById('businessToggle');
+        if (bizToggle) bizToggle.checked = false;
         updateCalculator();
     }
+}
+
+// Business toggle - minimum ZUS contribution base
+function toggleBusiness(checked) {
+    var salaryInput = document.getElementById('salary');
+    if (checked) {
+        // Minimalna podstawa składek ZUS dla DG (~4694 zł brutto ≈ ok. 4700 zł)
+        salaryInput.value = 4700;
+        // Deactivate quick salary buttons
+        document.querySelectorAll('.quick-salary-btn').forEach(function(btn) {
+            btn.classList.remove('active');
+        });
+    }
+    updateCalculator();
 }
 
 function selectGender(gender) {

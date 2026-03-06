@@ -126,6 +126,17 @@
                                 <button type="button" class="quick-salary-btn" data-amount="3200" onclick="setSalary(3200)">Minimalna (~3 200 zł)</button>
                                 <button type="button" class="quick-salary-btn" data-amount="5800" onclick="setSalary(5800)">Średnia (~5 800 zł)</button>
                             </div>
+                            <div class="business-toggle">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="businessToggle" onchange="toggleBusiness(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label">Prowadzę działalność
+                                    <span class="toggle-tooltip" tabindex="0">ⓘ
+                                        <span class="toggle-tooltip-text">Prowadząc działalność gospodarczą najczęściej odprowadzamy minimalne składki ZUS, dlatego w zarobkach podajemy taką kwotę. Jeśli odprowadzasz większe składki, wpisz odpowiednią kwotę.</span>
+                                    </span>
+                                </span>
+                            </div>
                         </div>
 
                         <div class="form-group">

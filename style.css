@@ -554,6 +554,10 @@ body {
     /* form fields column */
 }
 
+.calc-col-left .form-group {
+    margin-bottom: 1rem;
+}
+
 .calc-col-heading {
     text-align: center;
     font-size: 1.3rem;
@@ -731,6 +735,104 @@ body {
     border-color: #10b981;
     background: #10b981;
     color: white;
+}
+
+/* Business toggle */
+.business-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #ccc;
+    border-radius: 20px;
+    transition: background 0.3s;
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background: #10b981;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(18px);
+}
+
+.toggle-label {
+    font-size: 0.85rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.toggle-tooltip {
+    position: relative;
+    color: #10b981;
+    cursor: help;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.toggle-tooltip-text {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    background: #333;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 400;
+    padding: 0.75rem;
+    border-radius: 8px;
+    line-height: 1.4;
+    z-index: 50;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.toggle-tooltip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #333;
+}
+
+.toggle-tooltip:hover .toggle-tooltip-text,
+.toggle-tooltip:focus .toggle-tooltip-text {
+    display: block;
 }
 
 /* ZUS estimate box (amber warning) */
