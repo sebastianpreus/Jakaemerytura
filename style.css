@@ -1541,4 +1541,55 @@ body {
         padding: 0.65rem 0.75rem;
         font-size: 0.9rem;
     }
+
+    .calculator-section {
+        padding: 1.25rem 1rem;
+    }
+
+    .container {
+        padding: 0 0.75rem;
+    }
+
+    .form-group input {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .input-suffix input {
+        padding-right: 3rem;
+    }
+
+    .gender-buttons {
+        gap: 0.5rem;
+    }
+
+    .gender-btn {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .quick-salary-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .calc-result-box {
+        padding: 1rem;
+    }
+
+    .calc-result-box h3 {
+        font-size: 1.05rem;
+    }
+
+    .problem-section {
+        padding: 1.25rem 1rem 0.75rem;
+    }
+
+    .calculator-cta {
+        padding: 1rem;
+    }
+
+    .chart-gap-box {
+        padding: 0.75rem 1rem;
+    }
 }
