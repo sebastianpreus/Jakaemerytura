@@ -1099,8 +1099,6 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
-    max-width: 850px;
-    margin: 0 auto;
 }
 
 .solution-card {
@@ -1111,6 +1109,30 @@ body {
     text-decoration: none;
     color: inherit;
     display: block;
+    position: relative;
+    overflow: hidden;
+    min-height: 160px;
+}
+
+.solution-card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+    transition: opacity 0.3s;
+}
+
+.solution-card:hover .solution-card-bg {
+    opacity: 0.2;
+}
+
+.solution-card > *:not(.solution-card-bg) {
+    position: relative;
+    z-index: 1;
 }
 
 .solution-card:hover {
