@@ -248,16 +248,16 @@ function calculateGap() {
 
         if (gapMonthlyEl) {
             if (monthlyGap > 0) {
-                gapMonthlyEl.textContent = monthlyGap.toLocaleString('pl-PL') + ' zl / miesiac';
+                gapMonthlyEl.textContent = monthlyGap.toLocaleString('pl-PL') + ' zl';
                 gapMonthlyEl.className = 'result-gap-value negative';
             } else {
-                gapMonthlyEl.textContent = '0 zl – gratulacje!';
+                gapMonthlyEl.textContent = '0 zl';
                 gapMonthlyEl.className = 'result-gap-value positive';
             }
         }
         if (gapTotalEl) {
             if (totalGap > 0) {
-                gapTotalEl.textContent = totalGap.toLocaleString('pl-PL') + ' zl lacznie';
+                gapTotalEl.textContent = totalGap.toLocaleString('pl-PL') + ' zl';
             } else {
                 gapTotalEl.textContent = 'Brak luki – Twoja emerytura pokrywa potrzeby';
             }
