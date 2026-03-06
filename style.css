@@ -158,9 +158,8 @@ body {
 .hero {
     position: relative;
     color: white;
-    padding: 3rem 2rem;
+    padding: 1.75rem 2rem 2.5rem;
     text-align: center;
-    min-height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -504,8 +503,8 @@ body {
 
 .calculator-section {
     background: white;
-    padding: 2.5rem 2rem;
-    margin: 2rem 0;
+    padding: 2rem 2rem;
+    margin: 1.25rem 0;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 }
