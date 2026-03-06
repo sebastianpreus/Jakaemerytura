@@ -296,12 +296,7 @@ body {
     padding: 1rem 0.5rem;
 }
 
-/* Chart inside calculator */
-.chart-inside-calc {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e5e7eb;
-}
+/* Chart inside calculator (legacy, now in right column) */
 
 /* Chart summary cards */
 .chart-summary {
@@ -524,8 +519,25 @@ body {
 }
 
 .calculator-form {
-    max-width: 600px;
+    max-width: 100%;
     margin: 0 auto;
+}
+
+/* Two-column calculator grid */
+.calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.calc-col-left {
+    /* form fields column */
+}
+
+.calc-col-right {
+    position: sticky;
+    top: 80px;
 }
 
 .form-group {
@@ -1347,6 +1359,14 @@ body {
     .hero-cta-btn {
         font-size: 1rem;
         padding: 0.85rem 1.5rem;
+    }
+
+    .calc-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calc-col-right {
+        position: static;
     }
 
     .quick-salary-buttons {
