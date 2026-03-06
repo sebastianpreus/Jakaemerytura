@@ -540,6 +540,17 @@ body {
     top: 80px;
 }
 
+.calc-inline-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.calc-inline-fields .form-group {
+    margin-bottom: 0;
+}
+
 .form-group {
     margin-bottom: 1.25rem;
 }
@@ -1367,6 +1378,10 @@ body {
 
     .calc-col-right {
         position: static;
+    }
+
+    .calc-inline-fields {
+        grid-template-columns: 1fr;
     }
 
     .quick-salary-buttons {

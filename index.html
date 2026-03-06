@@ -121,7 +121,7 @@
                             </div>
                             <div class="quick-salary-buttons">
                                 <button type="button" class="quick-salary-btn" data-amount="3200" onclick="setSalary(3200)">Minimalna (~3 200 zł)</button>
-                                <button type="button" class="quick-salary-btn" data-amount="5800" onclick="setSalary(5800)">Średnia krajowa (~5 800 zł)</button>
+                                <button type="button" class="quick-salary-btn" data-amount="5800" onclick="setSalary(5800)">Średnia (~5 800 zł)</button>
                             </div>
                         </div>
 
@@ -158,21 +158,6 @@
                             <div class="zus-estimate-hint">💡 Możesz wpisać inną kwotę poniżej jeśli znasz swoje prognozy z ZUS</div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="expectedPension">Emerytura z ZUS (edytowalne):</label>
-                            <div class="input-suffix" data-suffix="zł">
-                                <input type="number" id="expectedPension" min="0" step="100">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="desiredPension">Ile chciałbyś mieć miesięcznie na emeryturze:</label>
-                            <div class="input-suffix" data-suffix="zł">
-                                <input type="number" id="desiredPension" min="1000" step="100" placeholder="np. 4 000" required>
-                            </div>
-                            <div class="form-hint">Pomyśl o swoich obecnych wydatkach miesięcznych</div>
-                        </div>
-
                         <div class="calc-result-box" id="resultBox">
                             <h3>📊 Twoja luka emerytalna</h3>
                             <div class="calc-result-row">
@@ -200,6 +185,21 @@
                         <p style="text-align: center; color: #666; margin: 0 auto 1rem; font-size: 0.9rem;">
                             Prognozowana wysokość emerytury z ZUS względem Twojego wynagrodzenia.
                         </p>
+
+                        <div class="calc-inline-fields">
+                            <div class="form-group">
+                                <label for="expectedPension">Emerytura z ZUS (edytowalne):</label>
+                                <div class="input-suffix" data-suffix="zł">
+                                    <input type="number" id="expectedPension" min="0" step="100">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="desiredPension">Oczekiwana emerytura:</label>
+                                <div class="input-suffix" data-suffix="zł">
+                                    <input type="number" id="desiredPension" min="1000" step="100" placeholder="np. 4 000" required>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="chart-summary" id="chartSummary" style="display: none;">
                             <div class="chart-summary-card chart-summary-neutral">
