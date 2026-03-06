@@ -1307,8 +1307,15 @@ body {
 
 .footer-info-box h3 {
     font-size: 1.8rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem;
     font-weight: 700;
+}
+
+.footer-subtitle {
+    font-size: 1.05rem !important;
+    font-weight: 400 !important;
+    opacity: 0.85 !important;
+    margin-bottom: 0.25rem;
 }
 
 .footer-info-box p {
