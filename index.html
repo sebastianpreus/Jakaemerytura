@@ -239,9 +239,6 @@
                         <div class="chart-container">
                             <canvas id="retirementChart"></canvas>
                         </div>
-                        <p style="text-align: center; color: #999; margin-top: 0.5rem; font-size: 0.85rem;">
-                            * Wartości od 2030 to prognozy.
-                        </p>
                     </div>
                 </div>
 
@@ -458,6 +455,22 @@
                 }
             }
         };
+        var disclaimerPlugin = {
+            id: 'disclaimerText',
+            afterDraw: function(chart) {
+                var cctx = chart.ctx;
+                var area = chart.chartArea;
+                cctx.save();
+                cctx.font = '11px system-ui, sans-serif';
+                cctx.fillStyle = 'rgba(150, 150, 150, 0.7)';
+                cctx.textAlign = 'center';
+                var xPos = area.left + (area.right - area.left) * 0.55;
+                var yPos = area.top + 14;
+                cctx.fillText('* Wartości od 2030 to prognozy', xPos, yPos);
+                cctx.restore();
+            }
+        };
+
         var pulseTimer = null;
         function startPulse() {
             if (pulseTimer) return;
@@ -473,7 +486,7 @@
 
         var retirementChart = new Chart(ctx, {
             type: 'line',
-            plugins: [pulsePlugin],
+            plugins: [pulsePlugin, disclaimerPlugin],
             data: {
                 datasets: [
                     {
