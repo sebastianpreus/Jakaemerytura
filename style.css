@@ -1330,9 +1330,17 @@ body {
     opacity: 0.95;
 }
 
-.footer-trust {
+.footer-social-proof {
     margin-top: 1.25rem;
-    padding-top: 1.25rem;
+    font-size: 1rem !important;
+    font-weight: 600;
+    font-style: italic;
+    opacity: 0.9 !important;
+}
+
+.footer-trust {
+    margin-top: 0.75rem;
+    padding-top: 1rem;
     border-top: 1px solid rgba(255,255,255,0.3);
     font-size: 0.9rem !important;
     font-weight: 600;
