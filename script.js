@@ -364,6 +364,31 @@ function updateSavingsSimulator() {
         if (depositsValueEl) depositsValueEl.textContent = Math.round(totalDeposits).toLocaleString('pl-PL') + ' zl';
         if (interestValueEl) interestValueEl.textContent = '+' + Math.round(interestGained).toLocaleString('pl-PL') + ' zl';
         resultValueEl.textContent = futureValue.toLocaleString('pl-PL') + ' zl';
+
+        // Karta luki emerytalnej
+        var gapCard = document.getElementById('savingsGapCard');
+        var gapValueEl = document.getElementById('savingsGapValue');
+        if (gapCard && gapValueEl) {
+            var desiredPension = parseFloat(document.getElementById('desiredPension')?.value) || 0;
+            var expectedPension = parseFloat(document.getElementById('expectedPension')?.value) || 0;
+            var yearsInRetirement = getYearsInRetirement();
+            var totalNeed = (desiredPension - expectedPension) * yearsInRetirement * 12;
+            if (totalNeed < 0) totalNeed = 0;
+
+            var remainingGap = totalNeed - futureValue;
+            if (remainingGap < 0) remainingGap = 0;
+
+            gapValueEl.textContent = Math.round(remainingGap).toLocaleString('pl-PL') + ' zl';
+
+            // Kolorowanie: zielony (brak luki), żółty (<20% zapotrzebowania), czerwony
+            gapCard.classList.remove('gap-green', 'gap-yellow');
+            if (remainingGap <= 0) {
+                gapCard.classList.add('gap-green');
+            } else if (totalNeed > 0 && remainingGap < totalNeed * 0.2) {
+                gapCard.classList.add('gap-yellow');
+            }
+        }
+
         simulator.style.display = 'block';
     } else {
         simulator.style.display = 'none';

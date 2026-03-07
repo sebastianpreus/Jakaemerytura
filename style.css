@@ -466,15 +466,15 @@ body {
 
 .savings-result-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0.75rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0.5rem;
     margin-bottom: 1rem;
 }
 
 .savings-result-card {
     background: white;
-    border-radius: 12px;
-    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    padding: 0.6rem 0.5rem;
     text-align: center;
 }
 
@@ -504,13 +504,36 @@ body {
 }
 
 .savings-result-value {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 800;
     color: #333;
 }
 
 .savings-result-value.savings-interest {
     color: #059669;
+}
+
+/* Gap card - red (default) */
+.savings-result-gap {
+    background: #dc2626;
+}
+
+.savings-result-gap .savings-result-label {
+    color: rgba(255,255,255,0.85);
+}
+
+.savings-result-gap .savings-result-value {
+    color: white;
+}
+
+/* Gap card - yellow (below 20% gap) */
+.savings-result-gap.gap-yellow {
+    background: #f59e0b;
+}
+
+/* Gap card - green (no gap) */
+.savings-result-gap.gap-green {
+    background: #10b981;
 }
 
 .savings-note {
