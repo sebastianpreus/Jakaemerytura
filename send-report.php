@@ -87,8 +87,8 @@ $html = '
 <!-- Header -->
 <tr>
 <td style="background:linear-gradient(135deg,#10b981,#059669);padding:30px 40px;text-align:center;">
-    <h1 style="color:white;margin:0;font-size:24px;">jakaemerytura.pl</h1>
-    <p style="color:rgba(255,255,255,0.9);margin:8px 0 0;font-size:16px;">Twój raport emerytalny</p>
+    <h1 style="color:white;margin:0;font-size:26px;">Twój raport emerytalny</h1>
+    <p style="color:rgba(255,255,255,0.7);margin:8px 0 0;font-size:13px;letter-spacing:0.5px;">jakaemerytura.pl</p>
 </td>
 </tr>
 
