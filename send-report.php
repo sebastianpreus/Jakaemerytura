@@ -96,7 +96,7 @@ $html = '
 <tr>
 <td style="padding:30px 40px 10px;">
     <p style="color:#333;font-size:15px;line-height:1.6;margin:0;">
-        Cześć! Oto podsumowanie Twojej sytuacji emerytalnej na podstawie danych, które podałeś w kalkulatorze.
+        Oto podsumowanie Twojej sytuacji emerytalnej na podstawie danych, które podałeś w kalkulatorze.
     </p>
 </td>
 </tr>
