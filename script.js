@@ -311,6 +311,36 @@ function calculateGap() {
         if (resultBox) resultBox.style.display = 'none';
         if (ctaBanner) ctaBanner.classList.remove('visible');
     }
+
+    // Update savings simulator
+    updateSavingsSimulator();
+}
+
+// Savings simulator - procent składany z miesięcznymi wpłatami
+function updateSavingsSimulator() {
+    var simulator = document.getElementById('savingsSimulator');
+    var resultValueEl = document.getElementById('savingsResultValue');
+    if (!simulator || !resultValueEl) return;
+
+    var retirementAge = parseInt(document.getElementById('retirementAge')?.value) || 0;
+    var currentAge = parseInt(document.getElementById('currentAge')?.value) || 0;
+    var yearsToRetirement = retirementAge - currentAge;
+
+    if (yearsToRetirement > 0 && currentAge >= 18 && selectedGender) {
+        var monthlyAmount = parseFloat(document.getElementById('monthlyAmount')?.value) || 500;
+        var annualRate = 0.04;
+        var monthlyRate = annualRate / 12;
+        var months = yearsToRetirement * 12;
+
+        // FV = PMT × [((1 + r)^n - 1) / r]
+        var futureValue = monthlyAmount * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+        futureValue = Math.round(futureValue);
+
+        resultValueEl.textContent = futureValue.toLocaleString('pl-PL') + ' zl';
+        simulator.style.display = 'block';
+    } else {
+        simulator.style.display = 'none';
+    }
 }
 
 // Setup calculator listeners
@@ -340,4 +370,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (desiredPensionInput) desiredPensionInput.addEventListener('input', calculateGap);
+
+    // Savings simulator slider
+    var monthlyAmountSlider = document.getElementById('monthlyAmount');
+    var monthlyAmountValueEl = document.getElementById('monthlyAmountValue');
+    if (monthlyAmountSlider) {
+        monthlyAmountSlider.addEventListener('input', function() {
+            if (monthlyAmountValueEl) {
+                monthlyAmountValueEl.textContent = this.value + ' zl';
+            }
+            updateSavingsSimulator();
+        });
+    }
 });

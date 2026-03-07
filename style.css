@@ -408,6 +408,92 @@ body {
     color: #065f46;
 }
 
+/* Savings simulator */
+.savings-simulator {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 2px solid #10b981;
+    border-radius: 15px;
+    padding: 1.5rem 2rem;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.savings-simulator h3 {
+    font-size: 1.2rem;
+    color: #065f46;
+    margin-bottom: 0.25rem;
+}
+
+.savings-subtitle {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1.25rem;
+}
+
+.savings-slider-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.savings-slider-row label {
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+}
+
+.savings-slider-control {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.savings-slider-control input[type="range"] {
+    width: 200px;
+    accent-color: #10b981;
+    cursor: pointer;
+}
+
+.savings-slider-value {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #059669;
+    min-width: 70px;
+}
+
+.savings-result {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.savings-result-label {
+    font-weight: 500;
+    color: #333;
+}
+
+.savings-result-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #059669;
+}
+
+.savings-note {
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+    margin: 0;
+}
+
 /* Chart interpretation */
 .chart-interpretation {
     text-align: center;

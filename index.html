@@ -242,6 +242,24 @@
                     </div>
                 </div>
 
+                <!-- Ramka: ile uzbierasz odkładając miesięcznie -->
+                <div class="savings-simulator" id="savingsSimulator" style="display: none;">
+                    <h3>💰 Ile możesz uzbierać do emerytury?</h3>
+                    <p class="savings-subtitle">Sprawdź, ile uzbierasz odkładając regularnie przy średnim zwrocie 4% rocznie</p>
+                    <div class="savings-slider-row">
+                        <label for="monthlyAmount">Odkładam miesięcznie:</label>
+                        <div class="savings-slider-control">
+                            <input type="range" id="monthlyAmount" min="100" max="1500" step="50" value="500">
+                            <span class="savings-slider-value" id="monthlyAmountValue">500 zł</span>
+                        </div>
+                    </div>
+                    <div class="savings-result">
+                        <span class="savings-result-label">Do emerytury uzbierasz około:</span>
+                        <span class="savings-result-value" id="savingsResultValue">0 zł</span>
+                    </div>
+                    <p class="savings-note">To Twoja indywidualna sytuacja. Skontaktuj się z nami, a dobierzemy najlepsze rozwiązanie.</p>
+                </div>
+
                 <!-- Interpretacja na pełną szerokość -->
                 <p class="chart-interpretation" id="chartInterpretation" style="display: none;"></p>
 
