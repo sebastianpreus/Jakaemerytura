@@ -2061,4 +2061,48 @@ body {
     .solution-card p {
         white-space: normal;
     }
+
+    /* Savings simulator - 2x2 grid na mobile */
+    .savings-result-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .savings-result-value {
+        font-size: 1rem;
+    }
+
+    .savings-slider-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .savings-simulator {
+        padding: 1rem 1rem;
+    }
+
+    /* Footer ciaśniejsza na mobile */
+    .footer {
+        padding: 1.5rem 1rem;
+    }
+
+    .footer-content {
+        gap: 1.5rem;
+    }
+
+    .footer-info-box {
+        padding: 1.25rem 1.25rem;
+    }
+
+    .footer-info-box h3 {
+        font-size: 1.2rem;
+        white-space: normal;
+    }
+
+    .footer-subtitle {
+        font-size: 1rem !important;
+    }
+
+    .footer-form .form-group {
+        margin-bottom: 0.6rem;
+    }
 }
