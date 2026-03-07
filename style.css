@@ -1062,6 +1062,11 @@ body {
     color: #333;
 }
 
+.result-gap-total-value {
+    color: #dc2626;
+    font-weight: 700;
+}
+
 .form-hint {
     font-size: 0.85rem;
     color: #999;
