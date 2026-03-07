@@ -1422,7 +1422,7 @@ body {
 
 .footer-form textarea {
     resize: vertical;
-    min-height: 70px;
+    min-height: 100px;
 }
 
 .footer-form button {
