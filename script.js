@@ -322,6 +322,8 @@ function updateSavingsSimulator() {
     var resultValueEl = document.getElementById('savingsResultValue');
     var depositsValueEl = document.getElementById('savingsDepositsValue');
     var interestValueEl = document.getElementById('savingsInterestValue');
+    var delaySlider = document.getElementById('savingsStartDelay');
+    var delayValueEl = document.getElementById('savingsStartDelayValue');
     if (!simulator || !resultValueEl) return;
 
     var retirementAge = parseInt(document.getElementById('retirementAge')?.value) || 0;
@@ -329,10 +331,29 @@ function updateSavingsSimulator() {
     var yearsToRetirement = retirementAge - currentAge;
 
     if (yearsToRetirement > 0 && currentAge >= 18 && selectedGender) {
+        // Ustaw max suwaka na lata do emerytury minus 1
+        if (delaySlider) {
+            var maxDelay = yearsToRetirement - 1;
+            if (maxDelay < 1) maxDelay = 1;
+            delaySlider.max = maxDelay;
+            if (parseInt(delaySlider.value) > maxDelay) {
+                delaySlider.value = 0;
+            }
+        }
+
+        var delay = parseInt(delaySlider?.value) || 0;
+        var effectiveYears = yearsToRetirement - delay;
+        if (effectiveYears < 1) effectiveYears = 1;
+
+        // Aktualizuj label suwaka
+        if (delayValueEl) {
+            delayValueEl.textContent = delay === 0 ? 'Teraz' : 'za ' + delay + ' lat';
+        }
+
         var monthlyAmount = parseFloat(document.getElementById('monthlyAmount')?.value) || 500;
         var annualRate = 0.04;
         var monthlyRate = annualRate / 12;
-        var months = yearsToRetirement * 12;
+        var months = effectiveYears * 12;
 
         var totalDeposits = monthlyAmount * months;
         // FV = PMT × [((1 + r)^n - 1) / r]
@@ -377,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (desiredPensionInput) desiredPensionInput.addEventListener('input', calculateGap);
 
-    // Savings simulator slider
+    // Savings simulator sliders
     var monthlyAmountSlider = document.getElementById('monthlyAmount');
     var monthlyAmountValueEl = document.getElementById('monthlyAmountValue');
     if (monthlyAmountSlider) {
@@ -385,6 +406,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (monthlyAmountValueEl) {
                 monthlyAmountValueEl.textContent = this.value + ' zl';
             }
+            updateSavingsSimulator();
+        });
+    }
+
+    var delaySlider = document.getElementById('savingsStartDelay');
+    if (delaySlider) {
+        delaySlider.addEventListener('input', function() {
             updateSavingsSimulator();
         });
     }
