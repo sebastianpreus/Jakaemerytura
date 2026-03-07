@@ -543,6 +543,187 @@ body {
     margin: 0;
 }
 
+/* Send report button */
+.send-report-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 2rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.send-report-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Report modal */
+.report-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.report-modal-overlay.active {
+    display: flex;
+}
+
+.report-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    max-width: 480px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.report-modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.report-modal-close:hover {
+    color: #333;
+}
+
+.report-modal h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.25rem;
+    color: #333;
+}
+
+.report-modal-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.25rem;
+}
+
+.report-form-group {
+    margin-bottom: 1rem;
+}
+
+.report-form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 0.3rem;
+}
+
+.report-form-group input[type="email"],
+.report-form-group input[type="text"],
+.report-form-group input[type="tel"] {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.report-form-group input:focus {
+    outline: none;
+    border-color: #10b981;
+}
+
+.report-checkbox-group {
+    margin-bottom: 0.75rem;
+}
+
+.report-checkbox-label {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-weight: 500 !important;
+    cursor: pointer;
+}
+
+.report-checkbox-label input[type="checkbox"] {
+    margin-top: 0.2rem;
+    accent-color: #10b981;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.report-checkbox-label small {
+    color: #888;
+    display: block;
+    font-weight: 400;
+}
+
+.report-consultation-fields {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+}
+
+.report-consultation-fields .report-form-group:last-child {
+    margin-bottom: 0;
+}
+
+.report-submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.report-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+}
+
+.report-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.report-modal-note {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+    color: #666;
+}
+
 /* Chart interpretation */
 .chart-interpretation {
     text-align: center;

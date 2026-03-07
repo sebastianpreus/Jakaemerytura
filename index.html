@@ -278,7 +278,7 @@
                             <span class="savings-result-value" id="savingsGapValue">0 zł</span>
                         </div>
                     </div>
-                    <p class="savings-note">To Twoja indywidualna sytuacja. Skontaktuj się z nami, a dobierzemy najlepsze rozwiązanie.</p>
+                    <button type="button" class="send-report-btn" onclick="openReportModal()">📧 Wyślij raport na email</button>
                 </div>
 
                 <!-- CTA na pełną szerokość -->
@@ -418,6 +418,37 @@
     </footer>
 
     <div class="floating-btn" onclick="scrollToFooterForm()">📞 Bezpłatna konsultacja</div>
+
+    <!-- Modal: Wyślij raport -->
+    <div class="report-modal-overlay" id="reportModalOverlay" onclick="closeReportModal(event)">
+        <div class="report-modal">
+            <button class="report-modal-close" onclick="closeReportModal()">&times;</button>
+            <h3>📧 Wyślij raport na email</h3>
+            <p class="report-modal-subtitle">Otrzymasz podsumowanie swojej sytuacji emerytalnej</p>
+            <div class="report-form-group">
+                <label for="reportEmail">Twój adres email</label>
+                <input type="email" id="reportEmail" placeholder="jan@example.com" required>
+            </div>
+            <div class="report-form-group report-checkbox-group">
+                <label class="report-checkbox-label">
+                    <input type="checkbox" id="reportConsultation" onchange="toggleConsultationFields()">
+                    <span>Proszę o konsultację <small>(kopia raportu zostanie wysłana do analizy)</small></span>
+                </label>
+            </div>
+            <div class="report-consultation-fields" id="reportConsultationFields" style="display: none;">
+                <div class="report-form-group">
+                    <label for="reportName">Imię i nazwisko</label>
+                    <input type="text" id="reportName" placeholder="Jan Kowalski">
+                </div>
+                <div class="report-form-group">
+                    <label for="reportPhone">Numer telefonu</label>
+                    <input type="tel" id="reportPhone" placeholder="+48 600 000 000">
+                </div>
+            </div>
+            <button type="button" class="report-submit-btn" id="reportSubmitBtn" onclick="sendReport()">Wyślij raport</button>
+            <p class="report-modal-note" id="reportStatus"></p>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>

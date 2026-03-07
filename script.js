@@ -441,4 +441,168 @@ document.addEventListener('DOMContentLoaded', function() {
             updateSavingsSimulator();
         });
     }
+
+    // Modal: zamykanie Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeReportModal();
+    });
 });
+
+// ========== REPORT MODAL ==========
+
+function openReportModal() {
+    var overlay = document.getElementById('reportModalOverlay');
+    if (overlay) overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeReportModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    var overlay = document.getElementById('reportModalOverlay');
+    if (overlay) overlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function toggleConsultationFields() {
+    var checked = document.getElementById('reportConsultation').checked;
+    var fields = document.getElementById('reportConsultationFields');
+    if (fields) fields.style.display = checked ? 'block' : 'none';
+}
+
+function sendReport() {
+    var emailInput = document.getElementById('reportEmail');
+    var email = emailInput?.value?.trim();
+    var statusEl = document.getElementById('reportStatus');
+    var submitBtn = document.getElementById('reportSubmitBtn');
+
+    if (!email || !email.includes('@')) {
+        if (statusEl) {
+            statusEl.textContent = 'Wpisz poprawny adres email.';
+            statusEl.style.color = '#dc2626';
+        }
+        return;
+    }
+
+    var consultation = document.getElementById('reportConsultation')?.checked || false;
+    var contactName = '';
+    var contactPhone = '';
+
+    if (consultation) {
+        contactName = document.getElementById('reportName')?.value?.trim() || '';
+        contactPhone = document.getElementById('reportPhone')?.value?.trim() || '';
+        if (!contactName || !contactPhone) {
+            if (statusEl) {
+                statusEl.textContent = 'Podaj imię, nazwisko i numer telefonu.';
+                statusEl.style.color = '#dc2626';
+            }
+            return;
+        }
+    }
+
+    // Zbierz dane z kalkulatora
+    var salary = parseFloat(document.getElementById('salary')?.value) || 0;
+    var currentAge = parseInt(document.getElementById('currentAge')?.value) || 0;
+    var retirementAge = parseInt(document.getElementById('retirementAge')?.value) || 0;
+    var expectedPension = parseFloat(document.getElementById('expectedPension')?.value) || 0;
+    var desiredPension = parseFloat(document.getElementById('desiredPension')?.value) || 0;
+    var isBusiness = document.getElementById('businessToggle')?.checked || false;
+    var gender = selectedGender || '';
+    var yearsToRetirement = retirementAge - currentAge;
+    var monthlyGap = desiredPension - expectedPension;
+    if (monthlyGap < 0) monthlyGap = 0;
+    var yearsInRetirement = getYearsInRetirement();
+    var totalGap = monthlyGap * yearsInRetirement * 12;
+
+    // Dane z savings simulator
+    var monthlyAmount = parseFloat(document.getElementById('monthlyAmount')?.value) || 500;
+    var delay = parseInt(document.getElementById('savingsStartDelay')?.value) || 0;
+    var effectiveYears = yearsToRetirement - delay;
+    if (effectiveYears < 1) effectiveYears = 1;
+    var annualRate = 0.04;
+    var monthlyRate = annualRate / 12;
+    var months = effectiveYears * 12;
+    var totalDeposits = monthlyAmount * months;
+    var futureValue = Math.round(monthlyAmount * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate));
+    var interestGained = futureValue - totalDeposits;
+    var remainingGap = totalGap - futureValue;
+    if (remainingGap < 0) remainingGap = 0;
+
+    var data = {
+        email: email,
+        consultation: consultation,
+        contactName: contactName,
+        contactPhone: contactPhone,
+        salary: salary,
+        currentAge: currentAge,
+        retirementAge: retirementAge,
+        gender: gender,
+        isBusiness: isBusiness,
+        expectedPension: expectedPension,
+        desiredPension: desiredPension,
+        monthlyGap: monthlyGap,
+        totalGap: totalGap,
+        yearsToRetirement: yearsToRetirement,
+        yearsInRetirement: yearsInRetirement,
+        monthlyAmount: monthlyAmount,
+        delay: delay,
+        effectiveYears: effectiveYears,
+        totalDeposits: Math.round(totalDeposits),
+        futureValue: futureValue,
+        interestGained: Math.round(interestGained),
+        remainingGap: Math.round(remainingGap)
+    };
+
+    // Wyślij
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Wysylanie...';
+    }
+    if (statusEl) {
+        statusEl.textContent = '';
+    }
+
+    fetch('send-report.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(function(response) { return response.json(); })
+    .then(function(result) {
+        if (result.success) {
+            if (statusEl) {
+                statusEl.textContent = 'Raport wyslany! Sprawdz swoją skrzynke.';
+                statusEl.style.color = '#059669';
+            }
+            if (submitBtn) {
+                submitBtn.textContent = 'Wyslano!';
+            }
+            setTimeout(function() {
+                closeReportModal();
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Wyslij raport';
+                }
+                if (statusEl) statusEl.textContent = '';
+            }, 2500);
+        } else {
+            if (statusEl) {
+                statusEl.textContent = result.error || 'Blad wysylki. Sprobuj ponownie.';
+                statusEl.style.color = '#dc2626';
+            }
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Wyslij raport';
+            }
+        }
+    })
+    .catch(function() {
+        if (statusEl) {
+            statusEl.textContent = 'Blad polaczenia. Sprobuj ponownie.';
+            statusEl.style.color = '#dc2626';
+        }
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Wyslij raport';
+        }
+    });
+}
