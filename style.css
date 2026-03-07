@@ -2071,6 +2071,20 @@ body {
         font-size: 1rem;
     }
 
+    /* Krótszy label na karcie luki na mobile */
+    .savings-result-gap .savings-result-label {
+        font-size: 0;
+    }
+    .savings-result-gap .savings-result-label::after {
+        content: 'Luka emerytalna:';
+        font-size: 0.85rem;
+    }
+
+    /* Ukryj szary bloczek luki na mobile */
+    .calc-result-box {
+        display: none !important;
+    }
+
     .savings-slider-row {
         flex-direction: column;
         gap: 0.5rem;
