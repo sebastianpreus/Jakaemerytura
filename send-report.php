@@ -103,32 +103,10 @@ $html = '
 
 <!-- Sekcja 1: Twoja sytuacja -->
 <tr>
-<td style="padding:20px 40px;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f9fa;border-radius:10px;padding:20px;">
-    <tr><td style="padding:20px;">
-        <h2 style="color:#059669;font-size:16px;margin:0 0 15px;text-transform:uppercase;letter-spacing:1px;">📊 Twoja sytuacja</h2>
-        <table width="100%" cellpadding="4" cellspacing="0">
-            <tr>
-                <td style="color:#666;font-size:14px;padding:4px 0;">Wiek:</td>
-                <td style="color:#333;font-size:14px;font-weight:bold;text-align:right;">' . $currentAge . ' lat</td>
-            </tr>
-            <tr>
-                <td style="color:#666;font-size:14px;padding:4px 0;">Płeć:</td>
-                <td style="color:#333;font-size:14px;font-weight:bold;text-align:right;">' . $genderLabel . '</td>
-            </tr>
-            <tr>
-                <td style="color:#666;font-size:14px;padding:4px 0;">Emerytura za:</td>
-                <td style="color:#333;font-size:14px;font-weight:bold;text-align:right;">' . $yearsToRetirement . ' lat</td>
-            </tr>
-            <tr>
-                <td style="color:#666;font-size:14px;padding:4px 0;">Zarobki netto:</td>
-                <td style="color:#333;font-size:14px;font-weight:bold;text-align:right;">' . fmt($salary) . ' zł / mies.</td>
-            </tr>
-            ' . ($isBusiness ? '<tr>
-                <td style="color:#666;font-size:14px;padding:4px 0;">Działalność gospodarcza:</td>
-                <td style="color:#333;font-size:14px;font-weight:bold;text-align:right;">' . $businessLabel . '</td>
-            </tr>' : '') . '
-        </table>
+<td style="padding:10px 40px;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f9fa;border-radius:8px;">
+    <tr><td style="padding:12px 16px;">
+        <p style="color:#888;font-size:12px;margin:0;line-height:1.8;">' . $genderLabel . ', ' . $currentAge . ' lat &middot; Emerytura za ' . $yearsToRetirement . ' lat &middot; Zarobki: ' . fmt($salary) . ' zł netto' . ($isBusiness ? ' &middot; Działalność gospodarcza' : '') . '</p>
     </td></tr>
     </table>
 </td>
