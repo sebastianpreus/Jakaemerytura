@@ -1282,7 +1282,7 @@ body {
 .footer {
     background: #2c3e50;
     color: white;
-    padding: 3rem 2rem;
+    padding: 2rem 2rem;
     margin-top: 3rem;
 }
 
@@ -1291,13 +1291,13 @@ body {
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    gap: 2rem;
     align-items: stretch;
 }
 
 .footer-info-box {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    padding: 2rem 2.5rem;
+    padding: 1.5rem 2rem;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     display: flex;
@@ -1306,9 +1306,9 @@ body {
 }
 
 .footer-icon {
-    font-size: 2.5rem;
+    font-size: 2rem;
     display: block;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.15rem;
 }
 
 .footer-info-box h3 {
@@ -1358,7 +1358,7 @@ body {
 
 .footer-info-bottom {
     margin-top: -0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .footer-social-proof {
@@ -1381,12 +1381,12 @@ body {
 
 .footer-form h3 {
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: white;
 }
 
 .footer-form .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .footer-form label {
@@ -1422,7 +1422,7 @@ body {
 
 .footer-form textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 70px;
 }
 
 .footer-form button {
@@ -1445,8 +1445,8 @@ body {
 
 .footer-bottom {
     text-align: center;
-    margin-top: 3rem;
-    padding-top: 2rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
     border-top: 1px solid rgba(255,255,255,0.1);
 }
 
