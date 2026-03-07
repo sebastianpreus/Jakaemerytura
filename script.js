@@ -320,6 +320,8 @@ function calculateGap() {
 function updateSavingsSimulator() {
     var simulator = document.getElementById('savingsSimulator');
     var resultValueEl = document.getElementById('savingsResultValue');
+    var depositsValueEl = document.getElementById('savingsDepositsValue');
+    var interestValueEl = document.getElementById('savingsInterestValue');
     if (!simulator || !resultValueEl) return;
 
     var retirementAge = parseInt(document.getElementById('retirementAge')?.value) || 0;
@@ -332,10 +334,14 @@ function updateSavingsSimulator() {
         var monthlyRate = annualRate / 12;
         var months = yearsToRetirement * 12;
 
+        var totalDeposits = monthlyAmount * months;
         // FV = PMT × [((1 + r)^n - 1) / r]
         var futureValue = monthlyAmount * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
         futureValue = Math.round(futureValue);
+        var interestGained = futureValue - totalDeposits;
 
+        if (depositsValueEl) depositsValueEl.textContent = Math.round(totalDeposits).toLocaleString('pl-PL') + ' zl';
+        if (interestValueEl) interestValueEl.textContent = '+' + Math.round(interestGained).toLocaleString('pl-PL') + ' zl';
         resultValueEl.textContent = futureValue.toLocaleString('pl-PL') + ' zl';
         simulator.style.display = 'block';
     } else {
