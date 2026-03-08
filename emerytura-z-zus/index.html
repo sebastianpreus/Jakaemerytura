@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ile wyniesie emerytura z ZUS – i dlaczego to może nie wystarczyć | jakaemerytura.pl</title>
-    <meta name="description" content="Sprawdź ile wyniesie Twoja emerytura z ZUS. Stopa zastąpienia spada - dowiedz się jak się zabezpieczyć.">
+    <meta name="description" content="Sprawdź ile realnie dostaniesz z ZUS na emeryturze. Dane GUS, prognoza stopy zastąpienia do 2060 i kalkulator luki emerytalnej.">
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -64,38 +64,66 @@
         </div>
     </section>
 
-    <div class="container">
-        <section class="content-section fade-in-section">
-            <h2>Jak ZUS liczy Twoją emeryturę</h2>
-            <p>Treść zostanie uzupełniona.</p>
-        </section>
+    <article class="article-content fade-in-section">
 
-        <section class="content-section fade-in-section">
-            <h2>Dlaczego stopa zastąpienia spada</h2>
-            <p>Treść zostanie uzupełniona.</p>
-        </section>
+        <h2>Ile naprawdę dostaniesz z ZUS?</h2>
 
-        <section class="content-section fade-in-section">
-            <h2>Ile naprawdę dostaniesz z ZUS</h2>
-            <p>Treść zostanie uzupełniona.</p>
-        </section>
+        <p>Większość Polaków zakłada, że ZUS zapewni im godną emeryturę. Rzeczywistość jest inna – i im wcześniej to zrozumiesz, tym lepiej możesz się przygotować.</p>
 
-        <section class="content-section fade-in-section">
-            <h2>Sprawdź swoją sytuację</h2>
-            <p>Skorzystaj z naszego <a href="../kalkulator-luki-emerytalnej/">kalkulatora</a> i zobacz ile możesz zyskać.</p>
-        </section>
+        <p>Według danych GUS z 2023 roku, przeciętna miesięczna emerytura w Polsce wynosi około 3 000 zł brutto. Po odliczeniu podatku i składki zdrowotnej, na konto trafia zwykle <strong>2 000–2 500 zł netto</strong>. Dla wielu osób to o połowę mniej niż ich obecne wynagrodzenie.</p>
 
-        <section class="content-section fade-in-section">
-            <h2>Dlaczego z roku na rok będzie gorzej?</h2>
-            <p>Polska jest jednym z najszybciej starzejących się społeczeństw w Europie. Wskaźnik obciążenia demograficznego – czyli stosunek emerytów do osób pracujących – rośnie z każdym rokiem. Dziś na jednego emeryta pracują około 3 osoby, ale prognozy GUS wskazują, że za 20 lat będzie to zaledwie 1,5 osoby. To oznacza, że system ZUS będzie miał coraz mniej pieniędzy na wypłatę świadczeń.</p>
-        </section>
+        <p>Co ważne, kobiety otrzymują przeciętnie znacznie niższe emerytury niż mężczyźni – wynika to z krótszego wieku emerytalnego (60 lat wobec 65) i statystycznie niższych wynagrodzeń przez całe życie zawodowe. Średnia emerytura kobiety to dziś ok. 2 400 zł brutto, mężczyzny – ok. 3 600 zł brutto.</p>
 
-        <section class="cta-section fade-in-section">
-            <h2>Porozmawiaj z ekspertem</h2>
-            <p>Każda sytuacja jest inna. Umów bezpłatną konsultację i sprawdź jakie rozwiązania pasują do Ciebie.</p>
-            <button class="cta-btn" style="background: white; color: #10b981;" onclick="scrollToFooterForm()">Umów bezpłatną konsultację</button>
-        </section>
-    </div>
+        <p>Dla porównania: mediana wynagrodzenia netto w Polsce wynosi dziś ok. 4 500 zł. Emerytura to więc często <strong>mniej niż połowa ostatniej pensji</strong>.</p>
+
+        <h2>Jak ZUS oblicza Twoją emeryturę?</h2>
+
+        <p>System emerytalny w Polsce działa na zasadzie zdefiniowanej składki. Przez całe życie zawodowe ZUS zbiera i waloryzuje Twoje składki emerytalne. W momencie przejścia na emeryturę całość zgromadzonego kapitału dzieli przez statystyczną liczbę miesięcy, które – według tablic GUS – masz jeszcze przed sobą.</p>
+
+        <p>Upraszczając: im krócej pracowałeś, im mniej zarabiałeś i im wcześniej przejdziesz na emeryturę – tym niższe świadczenie otrzymasz. Wcześniejsza emerytura to nie tylko więcej lat pobierania świadczenia, ale też mniejszy zgromadzony kapitał.</p>
+
+        <p>Kluczowy wskaźnik to <strong>stopa zastąpienia</strong> – czyli ile procent ostatniego wynagrodzenia będzie wynosiła Twoja emerytura. Przykład: jeśli zarabiasz dziś 6 000 zł netto, a stopa zastąpienia wyniesie 35%, Twoja emerytura to <strong>2 100 zł netto miesięcznie</strong>.</p>
+
+        <h2>Dlaczego stopa zastąpienia spada z roku na rok?</h2>
+
+        <p>Jeszcze w 2015 roku przeciętna stopa zastąpienia wynosiła ok. 61%. Dziś to już około 50%. Prognozy są jeszcze mniej optymistyczne: według szacunków ekspertów, osoby przechodzące na emeryturę w 2040 roku mogą liczyć na ok. 37% ostatnich zarobków, a w 2060 – zaledwie 25%.</p>
+
+        <p>Główna przyczyna to <strong>demografia</strong>. Polska jest jednym z najszybciej starzejących się społeczeństw w Europie. Dziś na jednego emeryta pracują ok. 3 osoby. Za 20 lat, według prognoz GUS, będzie to zaledwie 1,5 osoby. System ZUS ma charakter repartycyjny – składki obecnych pracowników finansują bieżące emerytury. Gdy pracujących ubywa, a emerytów przybywa, świadczenia muszą być niższe.</p>
+
+        <div class="article-chart">
+            <canvas id="articleChart"></canvas>
+            <p class="article-chart-caption">* Wartości od 2030 to prognozy</p>
+        </div>
+
+        <p>Do tego dochodzi niż demograficzny lat 90. – roczniki, które dziś wchodzą na rynek pracy, są znacznie mniejsze niż wyż z lat 70. i 80., który za kilkanaście lat masowo przejdzie na emeryturę.</p>
+
+        <div class="article-cta-box">
+            <p>🧮 Sprawdź swoją konkretną sytuację</p>
+            <h3>Ile wyniesie Twoja emerytura z ZUS i ile Ci zabraknie?</h3>
+            <a href="../#calculator" class="cta-btn" style="background: white; color: #10b981;">Przejdź do kalkulatora →</a>
+        </div>
+
+        <h2>Co to oznacza dla Ciebie?</h2>
+
+        <p>Jeśli masz dziś 35 lat i zarabiasz 6 000 zł netto, przy stopie zastąpienia wynoszącej ok. 35% (prognoza dla osób przechodzących na emeryturę ok. 2054 roku) Twoja emerytura z ZUS może wynieść ok. <strong>2 100 zł netto miesięcznie</strong>. To prawie trzy razy mniej niż obecne zarobki.</p>
+
+        <p>Różnica między tym, ile chcesz mieć na emeryturze, a tym, co dostaniesz z ZUS, to <strong>luka emerytalna</strong>. Dla większości Polaków ta luka wynosi od 1 000 do nawet 4 000 zł miesięcznie – i musi być pokryta z własnych oszczędności lub inwestycji.</p>
+
+        <p>To nie wyrok. Ale wymaga działania – i najlepiej zacząć wcześniej niż później, bo czas to najcenniejszy zasób w budowaniu kapitału emerytalnego.</p>
+
+        <h2>Co możesz z tym zrobić?</h2>
+
+        <p>Istnieje kilka sprawdzonych sposobów na uzupełnienie luki emerytalnej. Należą do nich między innymi IKE i IKZE – indywidualne konta emerytalne z ulgami podatkowymi, PPK i PPE oferowane przez pracodawców, a także samodzielne inwestowanie w fundusze indeksowe czy obligacje skarbowe.</p>
+
+        <p>Każde z tych rozwiązań ma swoje zalety i ograniczenia. Dobór odpowiedniego narzędzia zależy od Twojego wieku, dochodów, horyzontu czasowego i podejścia do ryzyka. <strong>Nie ma jednej odpowiedzi dla wszystkich.</strong></p>
+
+    </article>
+
+    <section class="cta-section fade-in-section">
+        <h2>Porozmawiaj o swojej sytuacji</h2>
+        <p>Każda sytuacja jest inna. Umów bezpłatną konsultację – wspólnie znajdziemy rozwiązanie dopasowane do Twoich potrzeb.</p>
+        <button class="cta-btn" style="background: white; color: #10b981;" onclick="scrollToFooterForm()">Umów bezpłatną konsultację</button>
+    </section>
 
     <footer class="footer" id="footerForm">
         <div class="footer-content">
@@ -147,6 +175,55 @@
         </div>
     </footer>
     <a href="https://wa.me/48881723938?text=Cze%C5%9B%C4%87%2C%20mam%20pytanie%20dotycz%C4%85ce%20oszcz%C4%99dzania%20na%20emerytur%C4%99" class="floating-btn" target="_blank" rel="noopener noreferrer">💬 Napisz do nas</a>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../script.js"></script>
+    <script>
+        var articleCtx = document.getElementById('articleChart').getContext('2d');
+        var articleGradient = articleCtx.createLinearGradient(0, 0, 0, 300);
+        articleGradient.addColorStop(0, 'rgba(16, 185, 129, 0.5)');
+        articleGradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+
+        new Chart(articleCtx, {
+            type: 'line',
+            data: {
+                labels: ['2014', '2015', '2016', '2017', '2018', '2030*', '2040*', '2050*', '2060*'],
+                datasets: [{
+                    label: 'Stopa zastąpienia (%)',
+                    data: [61.8, 61.5, 60.3, 58.5, 56.4, 47.1, 37.6, 28.7, 24.6],
+                    borderColor: '#10b981',
+                    backgroundColor: articleGradient,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#10b981',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx) { return ctx.parsed.y + '%'; }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 20,
+                        max: 70,
+                        ticks: { callback: function(v) { return v + '%'; } },
+                        grid: { color: 'rgba(0,0,0,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
