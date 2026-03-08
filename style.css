@@ -1774,6 +1774,15 @@ body {
 
 /* ========== ARTICLE CONTENT ========== */
 
+.hero + .article-content {
+    /* box nachodzi na hero */
+}
+
+.hero:has(+ .article-content) .hero-content {
+    max-width: 900px;
+    padding: 0 3.5rem;
+}
+
 .article-content {
     max-width: 900px;
     margin: -4rem auto 0;
